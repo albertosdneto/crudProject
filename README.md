@@ -1,5 +1,12 @@
 # crud_exercise
-Putting in practice concepts learned about jQuery, Bootstrap, javaScript, Python and Django.
+
+
+## Screenshots
+
+| Column A                        | Column B                     |
+|---------------------------------|------------------------------|
+| ![Home](screenshots/01.png)     |                              |
+|                                 |                              |
 
 ## About
 
