@@ -3,10 +3,10 @@
 
 ## Screenshots
 
-| Column A                        | Column B                     |
-|---------------------------------|------------------------------|
-| ![Home](screenshots/01.png)     |                              |
-|                                 |                              |
+| Column                          |                    
+|---------------------------------|
+| ![Home](screenshots/01.png)     |                              
+|                                 |                              
 
 ## About
 
