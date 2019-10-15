@@ -1,4 +1,4 @@
-# crud_exercise
+# Django CRUD
 
 
 ## Screenshots
