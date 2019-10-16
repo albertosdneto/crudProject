@@ -3,10 +3,9 @@
 
 ## Screenshots
 
-| Column                          |                    
-|---------------------------------|
-| ![Home](screenshots/01.png)     |                              
-|                                 |                              
+| Column A                        | Column B                        | 
+|---------------------------------|---------------------------------|
+| ![Home](screenshots/01.png)     | ![Companies](screenshots/02.png)|                  |                                 |                                 |                              
 
 ## About
 
@@ -34,11 +33,20 @@ cd crudProject
 
 pip install -r requirements.txt
 ```
-- Setup environment variables or setup these values inside ```settings.py```:
-``` python
-SECRET_KEY = "#####################"
+- Install and configure PostgreSQL: you may find the links below useful:
+<https://help.ubuntu.com/community/PostgreSQL>
+<https://medium.com/agatha-codes/painless-postgresql-django-d4f03364989>
+<https://medium.com/@lucas_souto/integrando-django-com-postgresql-58b3520ddf6e>
 
+- Setup environment variables that will be used by ```settings.py```:
+``` shell
+export SECRET_KEY="some_random_key"
+
+export DB_NAME="setup_database"
+export DB_USER="setup_user"
+export DB_PASS="setup_password"
 ```
+
 - Migrate database:
 ```shell
 python manage.py makemigrations

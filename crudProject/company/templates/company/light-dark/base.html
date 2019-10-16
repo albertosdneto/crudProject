@@ -20,7 +20,7 @@
     <!-- Favicon icon -->
     <link rel="icon" href="{% static 'files/assets/images/favicon.ico'%}" type="image/x-icon">
     <!-- Google font-->
-	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600" rel="stylesheet">
     <!-- Required Fremwork -->
     <link rel="stylesheet" type="text/css" href="{% static 'files/bower_components/bootstrap/css/bootstrap.min.css' %}">
     <!-- themify icon -->
@@ -30,9 +30,24 @@
     <!-- scrollbar.css -->
     <link rel="stylesheet" type="text/css" href="{% static 'files/assets/css/jquery.mCustomScrollbar.css' %}">
     <!-- radial chart.css -->
-    <link rel="stylesheet" href="{% static 'files/assets/pages/chart/radial/css/radial.css' %}" type="text/css" media="all' %}">
+    <link rel="stylesheet" href="{% static 'files/assets/pages/chart/radial/css/radial.css' %}" type="text/css"
+        media="all' %}">
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="{% static 'files/assets/css/style.css' %}">
+    
+    {% comment %} Only shows DataTables components to the correct content. {% endcomment %}
+    {% if companies %}
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+   
+    <script>
+        $(document).ready(function () {
+            $('#table_companies').DataTable({
+                ordering: true,
+            });
+        });
+    </script>
+    {% endif %}
+
 </head>
 
 <body>
@@ -64,7 +79,8 @@
                             </div>
                         </div>
                         <a href="#">
-                            <img class="img-fluid" src="{% static 'files/assets/images/logo.png' %}" alt="Theme-Logo' %}" />
+                            <img class="img-fluid" src="{% static 'files/assets/images/logo.png' %}"
+                                alt="Theme-Logo' %}" />
                         </a>
                         <a class="mobile-options">
                             <i class="ti-more"></i>
@@ -74,7 +90,8 @@
                     <div class="navbar-container container-fluid">
                         <ul class="nav-left">
                             <li>
-                                <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i></a></div>
+                                <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="ti-menu"></i></a>
+                                </div>
                             </li>
                             {% comment %} <li class="header-search">
                                 <div class="main-search morphsearch-search">
@@ -104,30 +121,39 @@
                                     </li>
                                     <li>
                                         <div class="media">
-                                            <img class="d-flex align-self-center img-radius" src="{% static 'files/assets/images/avatar-2.jpg' %}" alt="Generic placeholder image">
+                                            <img class="d-flex align-self-center img-radius"
+                                                src="{% static 'files/assets/images/avatar-2.jpg' %}"
+                                                alt="Generic placeholder image">
                                             <div class="media-body">
                                                 <h5 class="notification-user">John Doe</h5>
-                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
+                                                    elit.</p>
                                                 <span class="notification-time">30 minutes ago</span>
                                             </div>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="media">
-                                            <img class="d-flex align-self-center img-radius" src="{% static 'files/assets/images/avatar-4.jpg' %}" alt="Generic placeholder image">
+                                            <img class="d-flex align-self-center img-radius"
+                                                src="{% static 'files/assets/images/avatar-4.jpg' %}"
+                                                alt="Generic placeholder image">
                                             <div class="media-body">
                                                 <h5 class="notification-user">Joseph William</h5>
-                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
+                                                    elit.</p>
                                                 <span class="notification-time">30 minutes ago</span>
                                             </div>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="media">
-                                            <img class="d-flex align-self-center img-radius" src="{% static 'files/assets/images/avatar-3.jpg' %}" alt="Generic placeholder image">
+                                            <img class="d-flex align-self-center img-radius"
+                                                src="{% static 'files/assets/images/avatar-3.jpg' %}"
+                                                alt="Generic placeholder image">
                                             <div class="media-body">
                                                 <h5 class="notification-user">Sara Soudein</h5>
-                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
+                                                    elit.</p>
                                                 <span class="notification-time">30 minutes ago</span>
                                             </div>
                                         </div>
@@ -140,10 +166,11 @@
                                     <span class="badge bg-c-green"></span>
                                 </a>
                             </li> {% endcomment %}
-{% comment %}                             
+                            {% comment %}
                             <li class="user-profile header-notification">
                                 <a href="#!">
-                                    <img src="{% static 'files/assets/images/avatar-4.jpg' %}" class="img-radius" alt="User-Profile-Image">
+                                    <img src="{% static 'files/assets/images/avatar-4.jpg' %}" class="img-radius"
+                                        alt="User-Profile-Image">
                                     <span>John Doe</span>
                                     <i class="ti-angle-down"></i>
                                 </a>
@@ -170,8 +197,8 @@
                                     </li>
                                     <li>
                                         <a href="#">
-                                        <i class="ti-layout-sidebar-left"></i> Logout
-                                    </a>
+                                            <i class="ti-layout-sidebar-left"></i> Logout
+                                        </a>
                                     </li>
                                 </ul>
                             </li> {% endcomment %}
@@ -179,7 +206,7 @@
                     </div>
                 </div>
             </nav>
-           
+
 
             <!-- Page content including side navigation -->
             <div class="pcoded-main-container">
@@ -196,14 +223,14 @@
                                         <span class="pcoded-mtext">Home</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
-                            
+
                                 </li>
                                 <!-- Company menu-->
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
                                         <span class="pcoded-micon"><i class="ti-briefcase"></i><b>P</b></span>
                                         <span class="pcoded-mtext">Companies</span>
-                                        
+
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                     <ul class="pcoded-submenu">
@@ -214,7 +241,7 @@
                                                 <span class="pcoded-mtext">List Companies</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
-                                            
+
                                         </li>
                                         <li class="">
                                             <a href="javascript:void(0)">
@@ -222,14 +249,14 @@
                                                 <span class="pcoded-mtext">New Company</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
-                                            
+
                                         </li>
-                                        
+
 
                                     </ul>
                                 </li>
                                 <!-- End Company menu-->
-                               
+
                                 <!-- Client menu-->
                                 <li class="pcoded-hasmenu">
                                     <a href="javascript:void(0)">
@@ -245,7 +272,7 @@
                                                 <span class="pcoded-mtext">List Clients</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
-                                            
+
                                         </li>
                                         <li class="">
                                             <a href="javascript:void(0)">
@@ -253,29 +280,29 @@
                                                 <span class="pcoded-mtext">New Client</span>
                                                 <span class="pcoded-mcaret"></span>
                                             </a>
-                                            
+
                                         </li>
-                                        
+
 
                                     </ul>
                                 </li>
-                                <!-- End Client menu-->                               
-                                
+                                <!-- End Client menu-->
+
                             </ul>
-        
+
                         </div>
                     </nav>
-                    
+
                     <div class="pcoded-content">
                         <div class="pcoded-inner-content">
                             <!-- Main-body start -->
                             <div class="main-body">
                                 <div class="page-wrapper">
                                     <!-- Page-body start -->
-                                    
 
-                                           {% block content %}
-                                           {% endblock content %}
+
+                                    {% block content %}
+                                    {% endblock content %}
 
 
                                     <!-- Page-body end -->
@@ -335,20 +362,20 @@
 <![endif]-->
     <!-- Warning Section Ends -->
     <!-- Required Jquery -->
-    <script  src="{% static 'files/bower_components/jquery/js/jquery.min.js' %} "></script>
-    <script  src="{% static 'files/bower_components/jquery-ui/js/jquery-ui.min.js' %} "></script>
-    <script  src="{% static 'files/bower_components/popper.js/js/popper.min.js' %}"></script>
-    <script  src="{% static 'files/bower_components/bootstrap/js/bootstrap.min.js' %} "></script>
-    <script  src="{% static 'files/assets/pages/widget/excanvas.js' %} "></script>
+    <script src="{% static 'files/bower_components/jquery/js/jquery.min.js' %} "></script>
+    <script src="{% static 'files/bower_components/jquery-ui/js/jquery-ui.min.js' %} "></script>
+    <script src="{% static 'files/bower_components/popper.js/js/popper.min.js' %}"></script>
+    <script src="{% static 'files/bower_components/bootstrap/js/bootstrap.min.js' %} "></script>
+    <script src="{% static 'files/assets/pages/widget/excanvas.js' %} "></script>
     <!-- jquery slimscroll js -->
-    <script  src="{% static 'files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js' %} "></script>
+    <script src="{% static 'files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js' %} "></script>
     <!-- modernizr js -->
-    <script  src="{% static 'files/bower_components/modernizr/js/modernizr.js' %} "></script>
+    <script src="{% static 'files/bower_components/modernizr/js/modernizr.js' %} "></script>
     <!-- slimscroll js -->
-    <script  src="{% static 'files/assets/js/SmoothScroll.js' %}"></script>
+    <script src="{% static 'files/assets/js/SmoothScroll.js' %}"></script>
     <script src="{% static 'files/assets/js/jquery.mCustomScrollbar.concat.min.js' %} "></script>
     <!-- Chart js -->
-    <script  src="{% static 'files/bower_components/chart.js/js/Chart.js' %}"></script>
+    <script src="{% static 'files/bower_components/chart.js/js/Chart.js' %}"></script>
     <script src="{% static 'files/assets/pages/widget/amchart/amcharts.js' %}"></script>
     <script src="{% static 'files/assets/pages/widget/amchart/serial.js' %}"></script>
     <script src="{% static 'files/assets/pages/widget/amchart/light.js' %}"></script>
@@ -357,8 +384,13 @@
     <script src="{% static 'files/assets/js/vertical/vertical-layout.min.js' %} "></script>
     <!-- custom js -->
     <!--<script  src="{% static 'files/assets/pages/dashboard/custom-dashboard.min.js' %}"></script>-->
-    <script  src="{% static 'files/assets/pages/dashboard/custom-dashboard.js' %}"></script>
-    <script  src="{% static 'files/assets/js/script.js' %} "></script>
+    <script src="{% static 'files/assets/pages/dashboard/custom-dashboard.js' %}"></script>
+    <script src="{% static 'files/assets/js/script.js' %} "></script>
+
+     <!-- DataTables css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'DataTables/datatables.css' %}">
+    <!-- DataTables Script -->
+    <script type="text/javascript" charset="utf8" src="{% static 'DataTables/datatables.js' %}"></script>
 </body>
 
 </html>
