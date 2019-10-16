@@ -1,0 +1,46 @@
+{% extends "company/light-dark/base.html" %}
+
+{% block content %}
+
+                                    <!-- Page-header start -->
+                                    <div class="page-header card">
+                                        <div class="card-block">
+                                            <h5 class="m-b-10">Companies</h5>
+                                            <p class="text-muted m-b-10">Here you can find iformation about the companies recorded in our catalog.</p>                                            
+                                        </div>
+                                    </div>
+                                    <!-- Page-header end -->
+
+                                    <!-- Page-body start -->
+                                    <div class="page-body">
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <!-- Presentation text start. -->
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5>List of Companies</h5>
+                                                        
+                                                    </div>
+                                                    <div class="card-block" style="">
+                                                        {% for company in companies  %}
+                                                            <h6>{{ company.name }}</h6>
+                                                            <p>CNPJ: {{ company.cnpj }}</p>
+
+                                                        {% comment %} {% for address in company.addresses %}
+                                                            {% for item in address %}
+                                                                <p>{{item}}</p>
+                                                            {% endfor %}
+                                                        {% endfor %}  {% endcomment %}
+
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                                <!-- Presentation text end. -->
+                                    </div>
+                                    <!-- Page-body end -->
+                                
+
+
+
+{% endblock content %}
