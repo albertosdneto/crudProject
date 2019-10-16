@@ -34,9 +34,9 @@ cd crudProject
 pip install -r requirements.txt
 ```
 - Install and configure PostgreSQL: you may find the links below useful:
-<https://help.ubuntu.com/community/PostgreSQL>
-<https://medium.com/agatha-codes/painless-postgresql-django-d4f03364989>
-<https://medium.com/@lucas_souto/integrando-django-com-postgresql-58b3520ddf6e>
+  - <https://help.ubuntu.com/community/PostgreSQL>
+  - <https://medium.com/agatha-codes/painless-postgresql-django-d4f03364989>
+  - <https://medium.com/@lucas_souto/integrando-django-com-postgresql-58b3520ddf6e>
 
 - Setup environment variables that will be used by ```settings.py```:
 ``` shell
