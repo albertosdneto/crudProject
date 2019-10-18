@@ -16,11 +16,11 @@ def company(request):
 
 
 def getCompanyList(request):
-    if request.method == "GET" and request.is_ajax():
+    if request.method == "GET":  # and request.is_ajax():
         try:
             companies = list(Company.objects.all().values())
             data = dict()
-            data['companytList'] = companies
+            data['data'] = companies
         except:
             return JsonResponse({"success": False}, status=400)
 
