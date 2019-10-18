@@ -1,59 +1,65 @@
 {% extends "company/light-dark/base.html" %}
-
+{% load static %}
 {% block content %}
 
-                                    <!-- Page-header start -->
-                                    <div class="page-header card">
-                                        <div class="card-block">
-                                            <h5 class="m-b-10">Companies</h5>
-                                            <p class="text-muted m-b-10">Here you can find iformation about the companies recorded in our catalog.</p>                                            
-                                        </div>
-                                    </div>
-                                    <!-- Page-header end -->
+<!-- Page-header start -->
+<div class="page-header card">
+    <div class="card-block">
+        <h5 class="m-b-10">Companies</h5>
+        <p class="text-muted m-b-10">Here you can find iformation about the companies recorded in our catalog.</p>
+    </div>
+</div>
+<!-- Page-header end -->
 
-                                    <!-- Page-body start -->
-                                    <div class="page-body">
+<!-- Page-body start -->
+<div class="page-body">
 
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <!-- Presentation text start. -->
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5>List of Companies</h5>
-                                                        
-                                                    </div>
-                                                    <div class="card-block" style="">
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- Presentation text start. -->
+            <div class="card">
+                <div class="card-header">
+                    <h5>List of Companies</h5>
 
-                                                    {% if companies %}
-                                                        <table id="table_companies" class="display">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Name</th>
-                                                                    <th>CNPJ</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            {% for company in companies  %}
-                                                                <tr>
-                                                                    <td>{{ company.name }}</td>
-                                                                    <td>{{ company.cnpj }}</td>
-                                                                </tr>
-                                                            {% endfor %}
-                                                            </tbody>
-                                                        </table>
+                    <button class="btn btn-success" id="reload"><i class="icofont icofont-check-circled"></i>Reload</button>
+                </div>
+                <div class="card-block" style="">
 
-                                                        
-                                                    {% else %}
-                                                        <h6>No companies on record.</h6>
-
-                                                    {% endif %}
-                                                    </div>
-                                                </div>
-                                                <!-- Presentation text end. -->
-                                    </div>
-                                    <!-- Page-body end -->
-                                
+                    {% if companies %}
+                    <table id="table_companies" class="display">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>CNPJ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for company in companies  %}
+                            <tr>
+                                <td>{{ company.name }}</td>
+                                <td>{{ company.cnpj }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
 
 
+                    {% else %}
+                    <h6>No companies on record.</h6>
 
-{% endblock content %}
+                    {% endif %}
+                </div>
+            </div>
+            <!-- Presentation text end. -->
+        </div>
+        <!-- Page-body end -->
+
+        
+
+
+        {% endblock content %}
+
+        {% block scripts %}
+            <script src="{% static 'js/app.js' %}"></script>
+
+        {% endblock scripts %}
