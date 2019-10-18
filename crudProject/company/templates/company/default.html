@@ -1,41 +1,44 @@
-{% extends "company/light-dark/base.html" %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block header %}
+{% endblock header %}
 
 {% block content %}
 
-                                    <!-- Page-header start -->
-                                    <div class="page-header card">
-                                        <div class="card-block">
-                                            <h5 class="m-b-10">Django CRUD Pet Project</h5>
-                                            <p class="text-muted m-b-10">Putting in practice concepts learned about jQuery, Bootstrap, javaScript, Python and Django.</p>                                            
-                                        </div>
-                                    </div>
-                                    <!-- Page-header end -->
+<!-- Page-header start -->
+<div class="col-sm-12">
 
-                                    <!-- Page-body start -->
-                                    <div class="page-body">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="m-b-10">Page Title</h4>
+        </div>
+        <div class="card-block">
+            <p class="text-muted m-b-10">About this page.</p>
+        </div>
+    </div>
 
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <!-- Presentation text start. -->
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5>Default page: Header of the page here</h5>
-                                                        
-                                                    </div>
-                                                    <div class="card-block" style="">
-                                                        <p>
-                                                            Some text here.
-                                                        </p>
-                                                        <p>
-                                                            Another paragraph here.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <!-- Presentation text end. -->
-                                    </div>
-                                    <!-- Page-body end -->
-                                
+</div>
+<!-- Page-header end -->
 
+<!-- Page-content start -->
 
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header">
+
+            <h5>Items below</h5>
+
+        </div>
+
+        <div class="card-block">
+            <p>Content here</p>
+        </div>
+    </div>
+</div>
+<!-- Page-content end -->
 
 {% endblock content %}
+
+{% block scripts %}
+{% endblock scripts %}
