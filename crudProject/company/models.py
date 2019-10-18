@@ -9,10 +9,11 @@ class Company(models.Model):
     cnpj = models.CharField(max_length=14)
     addresses = ArrayField(
         ArrayField(
-            models.CharField(max_length=100, blank=True),
+            models.CharField(max_length=100, blank=True, null=True),
             size=9,
         ),
-        blank=True
+        blank=True,
+        null=True,
     )
 
     def __str__(self):
