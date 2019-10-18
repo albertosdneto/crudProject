@@ -6,20 +6,30 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
     $(document).ready(function () {
-        // $('#table_companies').DataTable({
-        //     ordering: true,
-        // });
 
-        $('#myTable').DataTable({
+        var table = $('#myTable').DataTable({
             "ordering": true,
             "ajax": "/ajax/get_company_list/",
             "columns": [
                 // { "data": "id" },
                 { "data": "name" },
                 { "data": "cnpj" },
+                { "data": "" },
                 // { "data": "addresses" },
-            ]
+            ],
+            "columnDefs": [{
+                "targets": -1,
+                "data": null,
+                "defaultContent": "<button class='delete-row btn btn-danger'>Delete!</button>" +
+                    "<button class='btn btn-warning delete'>Edit</button>",
+            }],
         });
+
+        $('#myTable tbody').on('click', 'button', function () {
+            var data = table.row($(this).parents('tr')).data();
+            alert(data[0] + "'s salary is: " + data[5]);
+        });
+
     });
 </script>
 {% endblock header %}
@@ -51,13 +61,13 @@
         </div>
         <div class="card-block">
 
-            <table id="myTable" class="display">
+            <table id="myTable" class="display" style="width:100%">
                 <thead>
                     <tr>
                         <!-- <th>Id</th> -->
                         <th>Name</th>
                         <th>CNPJ</th>
-                        <!-- <th>Address</th> -->
+                        <th>Tools</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -65,7 +75,7 @@
                         <!-- <th>Id</th> -->
                         <th>Name</th>
                         <th>CNPJ</th>
-                        <!-- <th>Address</th> -->
+                        <th>Tools</th>
                     </tr>
                 </tfoot>
             </table>
