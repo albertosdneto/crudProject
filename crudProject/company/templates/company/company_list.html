@@ -11,9 +11,10 @@
         // });
 
         $('#myTable').DataTable({
+            "ordering": true,
             "ajax": "/ajax/get_company_list/",
             "columns": [
-                { "data": "id" },
+                // { "data": "id" },
                 { "data": "name" },
                 { "data": "cnpj" },
                 // { "data": "addresses" },
@@ -53,7 +54,7 @@
             <table id="myTable" class="display">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <!-- <th>Id</th> -->
                         <th>Name</th>
                         <th>CNPJ</th>
                         <!-- <th>Address</th> -->
@@ -61,7 +62,7 @@
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>Id</th>
+                        <!-- <th>Id</th> -->
                         <th>Name</th>
                         <th>CNPJ</th>
                         <!-- <th>Address</th> -->
