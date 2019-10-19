@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render
-from .forms import CompanyForm
+from .forms import CompanyForm, CompanyAddressForm
 from .models import Company
 
 # Create your views here.
@@ -31,13 +31,17 @@ def getCompanyList(request):
 
 
 def newCompanytPage(request):
-    form = CompanyForm()
-    return render(request, 'company/new_company.html', {'companyForm': form})
+    form_company = CompanyForm()
+
+    context = {
+        'companyForm': form_company,
+    }
+    return render(request, 'company/new_company.html', context)
 
 
 def postNewCompany(request):
-    if request.method == "POST":
-        form = CompanyForm(request.POST)
-        form.save()
+    if request.method == "POST" and request.is_ajax():
+        form_company = CompanyForm(request.POST)
+        form_company.save()
         return JsonResponse({"success": True}, status=200)
     return JsonResponse({"success": False}, status=400)
