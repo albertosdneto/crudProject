@@ -7,4 +7,6 @@ urlpatterns = [
     path('ajax/get_company_list/', views.getCompanyList, name='get_company_list'),
     path('company/new/', views.newCompanytPage, name='company-new'),
     path('ajax/post_new_company/', views.postNewCompany, name='post_new_company'),
+    path('ajax/company/delete/<int:pk>',
+         views.deleteCompany, name='delete-company'),
 ]
