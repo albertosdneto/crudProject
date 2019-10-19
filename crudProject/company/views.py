@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_protect
 from .forms import CompanyForm, CompanyAddressForm
 from .models import Company
 
@@ -45,3 +46,16 @@ def postNewCompany(request):
         form_company.save()
         return JsonResponse({"success": True}, status=200)
     return JsonResponse({"success": False}, status=400)
+
+
+@csrf_protect
+def deleteCompany(request, pk):
+    if request.method == "POST" and request.is_ajax():
+        data = dict()
+        company = Company.objects.get(pk=pk)
+        if company:
+            company.delete()
+            data['message'] = "Company deleted!"
+        else:
+            data['message'] = "Error!"
+        return JsonResponse(data)
