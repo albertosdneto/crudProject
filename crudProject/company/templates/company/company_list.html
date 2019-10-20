@@ -23,10 +23,17 @@
             "columnDefs": [{
                 "targets": -1,
                 "data": null,
-                "defaultContent": "<button class='delete-row btn btn-danger'>Delete!</button>",
+                "defaultContent": "<a><button class='open-row btn btn-info'>Open</button></a><button class='delete-row btn btn-danger'>Delete</button>",
             }],
+            createdRow: function (row, data, dataIndex) {
+                // Set the data-toggle and data-target attributes
+                pk = $(row).closest('tr').attr('id').substr(3);
+                $(row).find('a:eq(0)')
+                    .attr({ 'href': "/company/details/" + pk });
+            }
         });
 
+        // Delete Item start
         $('#myTable tbody').on('click', 'button.delete-row', function () {
 
 
@@ -40,12 +47,11 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.value) {
-                    console.log('Imprimir linha abaixo: ');
                     pk = $(this).closest('tr').attr('id').substr(3);
                     deleteCompany(parseInt(pk, 10));
                     Swal.fire(
                         'Deleted!',
-                        'Your file has been deleted.',
+                        'Item deleted!',
                         'success'
                     )
                 }
@@ -54,7 +60,20 @@
             var data = table.row($(this).parents('tr')).data();
 
         });
+        // Delete Item end
 
+        // Open Item start
+
+        // Open Item end
+
+        // $(function () {
+        //     $("#dialog-1").dialog({
+        //         autoOpen: false,
+        //     });
+        //     $("#opener").click(function () {
+        //         $("#dialog-1").dialog("open");
+        //     });
+        // });
     });
 </script>
 {% endblock header %}
@@ -79,12 +98,12 @@
 <!-- Page-content start -->
 
 <div class="col-sm-12">
-    <div class="card">
+    <div class="card icon-btn">
         <div class="card-header">
             <h5>List of Companies</h5>
             <button class="btn btn-success" id="reload"><i class="icofont icofont-star"></i>Reload</button>
         </div>
-        <div class="card-block">
+        <div class="card-block ">
 
             <table id="myTable" class="display" style="width:100%">
                 <thead>
@@ -106,6 +125,8 @@
             </table>
 
         </div>
+        <!-- <div id="dialog-1" title="Dialog Title goes here...">This my first jQuery UI Dialog!</div> -->
+
     </div>
 </div>
 <!-- Page-content end -->
@@ -117,4 +138,5 @@
 
 <script type="text/javascript" charset="utf8" src="{% static 'DataTables/datatables.js' %}"></script>
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
+
 {% endblock scripts %}

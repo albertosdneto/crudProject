@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 from .forms import CompanyForm, CompanyAddressForm
@@ -29,6 +30,14 @@ def getCompanyList(request):
 
         return JsonResponse(data, status=200)
     return JsonResponse({"success": False}, status=400)
+
+
+def getCompanyDetails(request, pk):
+    company = get_object_or_404(Company, pk=pk)
+    context = {
+        'company': company
+    }
+    return render(request, 'company/company_details.html', context)
 
 
 def newCompanytPage(request):
