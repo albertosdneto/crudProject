@@ -25,10 +25,17 @@
 
 <div class="col-sm-12">
     <div class="card">
+
         <div class="card-header">
 
             <h5>Company details</h5>
+            <div id="messageBox" style="display: none;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <i class="icofont icofont-close-line-circled"></i>
+                </button>
 
+                <span></span>
+            </div>
         </div>
 
         <div class="card-block">
@@ -43,7 +50,7 @@
                     </div>
 
                 </div>
-                 <h4>Main Address</h4>
+                <h4>Main Address</h4>
                 <div class="form-row">
                     <div class="form-group col-md-4 mb-0">
                         {{ companyForm.line1|as_crispy_field }}
@@ -51,7 +58,7 @@
                     <div class="form-group col-md-3 mb-0">
                         {{ companyForm.line2|as_crispy_field }}
                     </div>
-                </div> 
+                </div>
                 <div class="form-row">
                     <div class="form-group col-md-1 mb-0">
                         {{ companyForm.zipCode|as_crispy_field }}
@@ -77,25 +84,21 @@
 {% endblock content %}
 
 {% block scripts %}
+<script src="{% static 'js/app.js' %}"></script>
+<script src="{% static 'js/jquery.blockUI.js' %}"></script>
 <script type="text/javascript">
+    $(document).ajaxStop($.unblockUI);
+
     $(document).ready(function () {
         $("#companyForm").submit(function (e) {
             // prevent from normal form behaviour
             e.preventDefault();
+
+            $.blockUI();
             // serialize the form data  
             var serializedData = $(this).serialize();
-            $.ajax({
-                type: 'POST',
-                url: "/ajax/post_new_company/",
-                data: serializedData,
-                success: function (response) {
-                    //reset the form after successful submit
-                    $("#companyForm")[0].reset();
-                },
-                error: function (response) {
-                    console.log(response)
-                }
-            });
+            createCompany(serializedData, '#companyForm', '#messageBox');
+
         });
     });
 </script>
