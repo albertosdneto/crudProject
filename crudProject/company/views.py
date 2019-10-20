@@ -65,11 +65,19 @@ def newCompanytPage(request):
 
 
 def postNewCompany(request):
+    data = dict()
     if request.method == "POST" and request.is_ajax():
         form_company = CompanyForm(request.POST)
         form_company.save()
-        return JsonResponse({"success": True}, status=200)
-    return JsonResponse({"success": False}, status=400)
+        data['message'] = 'Company created successfully'
+        data['success'] = True
+        # return JsonResponse({"success": True}, status=200)
+        return JsonResponse(data, status=200)
+
+    data['message'] = 'Error creating company. Contact system administrator'
+    data['success'] = False
+    # return JsonResponse({"success": False}, status=400)
+    return JsonResponse(data, status=400)
 
 
 @csrf_protect

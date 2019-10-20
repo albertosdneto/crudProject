@@ -25,6 +25,7 @@
                 "data": null,
                 "defaultContent": "<a><button class='open-row btn btn-info'>Open</button></a><a><button class='edit-row btn btn-warning'>Edit</button></a><button class='delete-row btn btn-danger'>Delete</button>",
             }],
+            
             createdRow: function (row, data, dataIndex) {
                 // Set the data-toggle and data-target attributes
                 pk = $(row).closest('tr').attr('id').substr(3);
@@ -62,20 +63,7 @@
             var data = table.row($(this).parents('tr')).data();
 
         });
-        // Delete Item end
 
-        // Open Item start
-
-        // Open Item end
-
-        // $(function () {
-        //     $("#dialog-1").dialog({
-        //         autoOpen: false,
-        //     });
-        //     $("#opener").click(function () {
-        //         $("#dialog-1").dialog("open");
-        //     });
-        // });
     });
 </script>
 {% endblock header %}
