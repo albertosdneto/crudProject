@@ -57,7 +57,7 @@
                                 {% csrf_token %}
                                 <div class="form-row">
                                     <div class="form-group col-md-4 mb-0">
-                                        {{ companyForm|crispy }}
+                                        {{ companyForm.as_p }}
                                     </div>
 
                                 </div>

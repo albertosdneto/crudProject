@@ -27,8 +27,6 @@
     <div class="card">
 
         <div class="card-header">
-
-            <h5>Company details</h5>
             <div id="messageBox" style="display: none;">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <i class="icofont icofont-close-line-circled"></i>
@@ -39,7 +37,19 @@
         </div>
 
         <div class="card-block">
-            <form id="companyForm" method="POST">
+            <form id="companyForm" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Company info</legend>
+                    {{ companyForm.as_p }}
+                </fieldset>
+
+
+
+
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+            {% comment %} <form id="companyForm" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-row">
                     <div class="form-group col-md-4 mb-0">
@@ -47,6 +57,9 @@
                     </div>
                     <div class="form-group col-md-3 mb-0">
                         {{ companyForm.cnpj|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-3 mb-0">
+                        {{ companyForm.logo|as_crispy_field }}
                     </div>
 
                 </div>
@@ -75,7 +88,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Register</button>
-            </form>
+            </form> {% endcomment %}
         </div>
     </div>
 </div>

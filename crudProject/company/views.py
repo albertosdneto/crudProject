@@ -46,7 +46,7 @@ def editCompanyDetails(request, pk):
 
     if form.is_valid():
         form.save()
-        return redirect('/')
+        return redirect('/company/details/' + str(pk))
 
     context = {
         'companyForm': form

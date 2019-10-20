@@ -109,8 +109,9 @@ ENV/
 *.db
 *.pid
 
-# Remove users pictures
-profile_pics/
+# Remove pictures
+company/logo_pics/
+logo_pics/
 
 # Environment variables
 environment.txt
