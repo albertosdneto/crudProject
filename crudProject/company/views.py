@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_protect
 from .forms import CompanyForm, CompanyAddressForm
 from .models import Company
@@ -38,6 +38,21 @@ def getCompanyDetails(request, pk):
         'company': company
     }
     return render(request, 'company/company_details.html', context)
+
+
+def editCompanyDetails(request, pk):
+    company = get_object_or_404(Company, pk=pk)
+    form = CompanyForm(request.POST or None, instance=company)
+
+    if form.is_valid():
+        form.save()
+        return redirect('/')
+
+    context = {
+        'companyForm': form
+    }
+
+    return render(request, 'company/company_edit.html', context)
 
 
 def newCompanytPage(request):
