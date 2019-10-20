@@ -6,7 +6,7 @@
 | Column A                        | Column B                        | 
 |---------------------------------|---------------------------------|
 | ![Home](screenshots/01.png)     | ![Companies](screenshots/02.png)|                            
-| ![NewComp](screenshots/03.png)  | ![InfoComp](screenshots/02.png) |
+| ![NewComp](screenshots/03.png)  | ![InfoComp](screenshots/04.png) |
 
 ## About
 
