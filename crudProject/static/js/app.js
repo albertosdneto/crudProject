@@ -34,17 +34,44 @@ $.ajaxSetup({
 
 // CSRF token setup end
 
-function deleteCompany(pk) {
+function deleteCompany(pk, tableID) {
     companyPk = pk;
-    $.ajax({
-        url: `/ajax/company/delete/${companyPk}`,
-        type: 'POST',
-        dataType: 'json',
-        success: function (data) {
-            //$(el).parents()[1].remove()
-            $('#myTable').DataTable().ajax.reload();
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
+            $.ajax({
+                url: `/ajax/company/delete/${companyPk}`,
+                type: 'POST',
+                dataType: 'json',
+                success: function () {
+                    $(tableID).DataTable().ajax.reload();
+                    // let tableID = $(this).closest('table');
+                    Swal.fire(
+                        'Deleted!',
+                        'Item deleted!',
+                        'success'
+                    );
+                },
+                error: function (response) {
+                    Swal.fire(
+                        'Fail!',
+                        'Item NOT deleted!',
+                        'error'
+                    )
+                }
+            });
+
         }
-    });
+    })
+
 }
 
 function createCompany(serializedData, formID, messageBoxID) {
@@ -67,8 +94,10 @@ function createCompany(serializedData, formID, messageBoxID) {
     });
 }
 
-$('#reload').on("click", function (event) {
+// Table related start
 
+// Reloads table data at every click on 'Reload'
+function reloadCompanyTable(tableID) {
     $.ajax({
 
         type: "GET",
@@ -77,11 +106,48 @@ $('#reload').on("click", function (event) {
 
     }).done(function (response) {
 
-        $('#myTable').DataTable().ajax.reload();
+        $(tableID).DataTable().ajax.reload();
 
     }).fail(function (xhr, result, status) {
 
-        console.log('Error retrieving list of companies. Contact system admin.');
+        console.log('Error retrieving content. Contact system admin.');
 
     });
-});
+}
+
+// Setup Company Table start
+function setupCompanyTable(tableID) {
+    $(tableID).DataTable({
+        "ordering": true,
+        "ajax": "/ajax/get_company_list/",
+        rowId: function (a) {
+            return 'pk_' + a.id;
+        },
+        "columns": [
+            // { "data": "id" },
+            { "data": "name" },
+            { "data": "cnpj" },
+            { "data": "" },
+            // { "data": "addresses" },
+        ],
+        "columnDefs": [{
+            "targets": -1,
+            "data": null,
+            "defaultContent": "<a><button class='open-row btn btn-info'>Open</button></a><a><button class='edit-row btn btn-warning'>Edit</button></a><button class='delete-row btn btn-danger'>Delete</button>",
+        }],
+
+        createdRow: function (row, data, dataIndex) {
+            pk = $(row).closest('tr').attr('id').substr(3);
+            $(row).find('a:eq(0)')
+                .attr({ 'href': "/company/details/" + pk });
+            $(row).find('a:eq(1)')
+                .attr({ 'href': "/company/edit/" + pk });
+        }
+    });
+}
+
+// Setup Company Table end
+
+
+
+// Table related end
