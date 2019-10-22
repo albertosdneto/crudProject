@@ -2,31 +2,10 @@
 {% load static %}
 
 {% block header %}
+
 <link rel="stylesheet" type="text/css" href="{% static 'DataTables/datatables.css' %}">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script>
-    $(document).ready(function () {
 
-        $(document).ajaxStop($.unblockUI);
-
-        setupCompanyTable('#myTable');
-
-        // Reload table start
-        $('.reloadButton').click(function () {
-            $.blockUI();
-            reloadCompanyTable('#myTable');
-        });
-        // Reload table end
-
-        // Delete Item start
-        $('#myTable tbody').on('click', 'button.delete-row', function () {
-            pk = $(this).closest('tr').attr('id').substr(3);
-            deleteCompany(parseInt(pk, 10), '#myTable');
-        });
-        // Delete Item end
-
-    });
-</script>
 {% endblock header %}
 
 {% block content %}
@@ -59,7 +38,6 @@
             <table id="myTable" class="display" style="width:100%">
                 <thead>
                     <tr>
-                        <!-- <th style="visibility: hidden;">Id</th> -->
                         <th>Name</th>
                         <th>CNPJ</th>
                         <th>Tools</th>
@@ -67,7 +45,6 @@
                 </thead>
                 <tfoot>
                     <tr>
-                        <!-- <th style="visibility: hidden;">Id</th> -->
                         <th>Name</th>
                         <th>CNPJ</th>
                         <th>Tools</th>
@@ -76,7 +53,6 @@
             </table>
 
         </div>
-        <!-- <div id="dialog-1" title="Dialog Title goes here...">This my first jQuery UI Dialog!</div> -->
 
     </div>
 </div>
@@ -85,9 +61,32 @@
 {% endblock content %}
 
 {% block scripts %}
-<script src="{% static 'js/app.js' %}"></script>
 
+<script src="{% static 'js/app.js' %}"></script>
 <script type="text/javascript" charset="utf8" src="{% static 'DataTables/datatables.js' %}"></script>
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $(document).ajaxStop($.unblockUI);
+
+        setupCompanyTable('#myTable');
+
+        // Reload table start
+        $('.reloadButton').click(function () {
+            $.blockUI();
+            reloadCompanyTable('#myTable');
+        });
+        // Reload table end
+
+        // Delete Item start
+        $('#myTable tbody').on('click', 'button.delete-row', function () {
+            pk = $(this).closest('tr').attr('id').substr(3);
+            deleteCompany(parseInt(pk, 10), '#myTable');
+        });
+        // Delete Item end
+
+    });
+</script>
 
 {% endblock scripts %}
