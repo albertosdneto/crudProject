@@ -53,7 +53,6 @@ function deleteCompany(pk, tableID) {
                 dataType: 'json',
                 success: function () {
                     $(tableID).DataTable().ajax.reload();
-                    // let tableID = $(this).closest('table');
                     Swal.fire(
                         'Deleted!',
                         'Item deleted!',
@@ -124,11 +123,9 @@ function setupCompanyTable(tableID) {
             return 'pk_' + a.id;
         },
         "columns": [
-            // { "data": "id" },
             { "data": "name" },
             { "data": "cnpj" },
             { "data": "" },
-            // { "data": "addresses" },
         ],
         "columnDefs": [{
             "targets": -1,
@@ -141,7 +138,7 @@ function setupCompanyTable(tableID) {
             $(row).find('a:eq(0)')
                 .attr({ 'href': "/company/details/" + pk });
             $(row).find('a:eq(1)')
-                .attr({ 'href': "/company/edit/" + pk });
+                .attr({ 'href': "/company/update/" + pk });
         }
     });
 }
