@@ -91,21 +91,13 @@
 
 {% block scripts %}
 <script src="{% static 'js/app.js' %}"></script>
+<script src="{% static 'company/js/companyApp.js' %}"></script>
 <script src="{% static 'js/jquery.blockUI.js' %}"></script>
 <script type="text/javascript">
-    $(document).ajaxStop($.unblockUI);
+   
 
     $(document).ready(function () {
-        $("#companyForm").submit(function (e) {
-            // prevent from normal form behaviour
-            e.preventDefault();
 
-            $.blockUI();
-            // serialize the form data  
-            var serializedData = $(this).serialize();
-            createCompany(serializedData, '#companyForm', '#messageBox');
-
-        });
     });
 </script>
 {% endblock scripts %}
