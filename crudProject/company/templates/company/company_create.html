@@ -36,52 +36,8 @@
                 <span></span>
             </div>
         </div>
-
         <div class="card-block">
-        {% crispy companyForm %}
-            {% comment %} <form id="companyForm" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <!-- {{ companyForm|crispy }} -->
-                <div class="form-row">
-                    <div class="form-group col-md-4 mb-0">
-                        {{ companyForm.name|as_crispy_field }}
-                    </div>
-                    <div class="form-group col-md-3 mb-0">
-                        {{ companyForm.cnpj|as_crispy_field }}
-                    </div>
-
-                </div>
-                <h4>Main Address</h4>
-                <div class="form-row">
-                    <div class="form-group col-md-4 mb-0">
-                        {{ companyForm.line1|as_crispy_field }}
-                    </div>
-                    <div class="form-group col-md-3 mb-0">
-                        {{ companyForm.line2|as_crispy_field }}
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-1 mb-0">
-                        {{ companyForm.zipCode|as_crispy_field }}
-                    </div>
-                    <div class="form-group col-md-2 mb-0">
-                        {{ companyForm.city|as_crispy_field }}
-                    </div>
-                    <div class="form-group col-md-2 mb-0">
-                        {{ companyForm.state|as_crispy_field }}
-                    </div>
-                    <div class="form-group col-md-2 mb-0">
-                        {{ companyForm.country|as_crispy_field }}
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4 mb-0">
-                        {{ companyForm.logo|as_crispy_field }}
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Register</button>
-            </form> {% endcomment %}
+            {% crispy companyForm %}
         </div>
     </div>
 </div>
@@ -90,14 +46,6 @@
 {% endblock content %}
 
 {% block scripts %}
-<script src="{% static 'js/app.js' %}"></script>
 <script src="{% static 'company/js/companyApp.js' %}"></script>
 <script src="{% static 'js/jquery.blockUI.js' %}"></script>
-<script type="text/javascript">
-   
-
-    $(document).ready(function () {
-
-    });
-</script>
 {% endblock scripts %}

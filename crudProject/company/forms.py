@@ -1,16 +1,12 @@
-from django import forms
-from .models import Company, CompanyAddress
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column
-# from crispy_forms.layout import Layout, Field, Div, MultiField, Submit
-# from crispy_forms.bootstrap import FieldWithButtons, StrictButton
 from crispy_forms.layout import Field
+from django import forms
+from .models import Company, CompanyAddress
 
 
 class CustomImageField(Field):
     template = 'company/custom_imagefield.html'
-# class Row(Div):
-#     css_class = "form-row"
 
 
 class CompanyForm(forms.ModelForm):
@@ -55,7 +51,7 @@ class CompanyForm(forms.ModelForm):
                 css_class='form-row'
             ),
 
-            CustomImageField('logo'),  # <-- Here
+            CustomImageField('logo'), 
             Submit('submit', 'Register')
         )
 
