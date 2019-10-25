@@ -60,31 +60,6 @@ class CompanyForm(forms.ModelForm):
         )
 
 
-# Layout(
-#             MultiField(
-#                 Div(
-#                     Div('name', css_class='span6'),
-#                     Div('cnpj', css_class='span6'),
-#                     css_class='beto'),
-#                 Div(
-#                     Div('line1', css_class='span6'),
-#                     Div('line2', css_class='span6'),
-#                     css_class='row-fluid'),
-#                 Div(
-#                     Div('zipCode', css_class='span6'),
-#                     Div('city', css_class='span6'),
-#                     css_class='row-fluid'),
-#                 Div(
-#                     Div('state', css_class='span6'),
-#                     Div('country', css_class='span6'),
-#                     css_class='row-fluid'),
-#                 Div(
-#                     Div('logo', css_class='span6'),
-#                     css_class='row-fluid'),
-#             )
-#         )
-# FieldWithButtons('field_name', StrictButton("Go!"))
-
 class CompanyAddressForm(forms.ModelForm):
     class Meta:
         model = CompanyAddress

@@ -1,6 +1,6 @@
 // CSRF token setup start
 // This configuration is necessary to make sure ajax requests
-// are going to work withou a form
+// are going to work without a form (necessary for deleteCompany)
 
 function getCookie(name) {
     var cookieValue = null;
@@ -73,25 +73,6 @@ function deleteCompany(pk, tableID) {
 
 }
 
-function createCompany(serializedData, formID, messageBoxID) {
-    $.ajax({
-        type: 'POST',
-        url: "/ajax/post_new_company/",
-        data: serializedData,
-        success: function (response) {
-            //reset the form after successful submit
-            $(formID)[0].reset();
-            $(messageBoxID).attr("class", "alert alert-success col-md-2");
-            $(messageBoxID).find('span').html("<strong>Success!</strong> Company Created");
-            $(messageBoxID).css("display", "block");
-        },
-        error: function (response) {
-            $(messageBoxID).attr("class", "alert alert-danger col-md-2");
-            $(messageBoxID).find('span').html("<strong>Error!</strong> Contact system support.");
-            $(messageBoxID).css("display", "block");
-        }
-    });
-}
 
 // Table related start
 
