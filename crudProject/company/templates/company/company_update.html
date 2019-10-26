@@ -7,64 +7,53 @@
 {% block content %}
 
 <!-- Page-header start -->
-<div class="col-sm-12">
 
-    <div class="card">
-        <div class="card-header">
-            <h4 class="m-b-10">{{ company.name }}</h4>
-        </div>
-        <div class="card-block">
-            <p class="text-muted m-b-10">Edit this company</p>
-        </div>
-    </div>
-
-</div>
 <!-- Page-header end -->
 
 <!-- Page-content start -->
 
 <div class="col-sm-12">
     <div class="card">
+
+        <div class="card-header">
+            <div id="messageBox" style="display: none;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <i class="icofont icofont-close-line-circled"></i>
+                </button>
+
+                <span></span>
+            </div>
+        </div>
+
         <div class="card-block">
             <div class="row">
 
                 <!-- Company Info start -->
                 <div class="col-lg-12 col-xl-12">
-                    <div class="sub-title">Company Details</div>
+                    <div class="sub-title">Edit Company Details</div>
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs  tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#home1" role="tab"
                                 aria-expanded="true">General</a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#profile1" role="tab"
                                 aria-expanded="false">Contact</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#messages1" role="tab"
                                 aria-expanded="false">Addresses</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#settings1" role="tab"
-                                aria-expanded="false">Branches</a>
-                        </li>
+                        </li> -->
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content tabs card-block">
                         <div class="tab-pane active" id="home1" role="tabpanel" aria-expanded="true">
-                            <form method="POST">
-                                {% csrf_token %}
-                                <div class="form-row">
-                                    <div class="form-group col-md-4 mb-0">
-                                        {{ companyForm.as_p }}
-                                    </div>
-
-                                </div>
-                                <button type="submit" class="btn btn-primary">Update</button>
-                            </form>
+                            <div class="card-block">
+                                {% crispy companyForm %}
+                            </div>
                         </div>
-                        <div class="tab-pane" id="profile1" role="tabpanel" aria-expanded="false">
+                        <!-- <div class="tab-pane" id="profile1" role="tabpanel" aria-expanded="false">
                             <p class="m-0">2.Cras consequat in enim ut efficitur. Nulla posuere elit quis auctor
                                 interdum praesent sit amet nulla vel enim amet. Donec convallis tellus neque, et
                                 imperdiet felis amet.</p>
@@ -75,12 +64,7 @@
                                 quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Lorem
                                 ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
                                 Aenean mas Cum sociis natoque penatibus et magnis dis.....</p>
-                        </div>
-                        <div class="tab-pane" id="settings1" role="tabpanel" aria-expanded="false">
-                            <p class="m-0">4.Cras consequat in enim ut efficitur. Nulla posuere elit quis auctor
-                                interdum praesent sit amet nulla vel enim amet. Donec convallis tellus neque, et
-                                imperdiet felis amet.</p>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <!-- Company Info end -->
@@ -96,4 +80,7 @@
 {% endblock content %}
 
 {% block scripts %}
+<script type="text/javascript" charset="utf8" src="{% static 'DataTables/datatables.js' %}"></script>
+<script src="{% static 'company/js/companyApp.js' %}"></script>
+<script src="{% static 'js/jquery.blockUI.js' %}"></script>
 {% endblock scripts %}

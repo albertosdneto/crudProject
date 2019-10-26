@@ -12,6 +12,9 @@
     <div class="card">
         <div class="card-header">
             <h4 class="m-b-10">{{ company.name }}</h4>
+            <a href="{% url 'company-update' pk=company.pk %}">
+                <button class='edit-row btn btn-warning'>Edit</button>
+            </a>
         </div>
     </div>
 
@@ -35,41 +38,42 @@
                                 aria-expanded="true">General</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#profile1" role="tab"
+                            <a class="nav-link" data-toggle="tab" href="#contact1" role="tab"
                                 aria-expanded="false">Contact</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#messages1" role="tab"
                                 aria-expanded="false">Addresses</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#settings1" role="tab"
-                                aria-expanded="false">Branches</a>
-                        </li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="tab-content tabs card-block">
                         <div class="tab-pane active" id="home1" role="tabpanel" aria-expanded="true">
+                            <img class="account-img" src="{{ company.logo.url }}" width="100px" height="auto">
+                            <br><br>
                             <p class="m-0"><strong>Tax ID Number: </strong> {{ company.cnpj }}</p>
-                            <img class="account-img" src="{{ company.logo.url }}">
 
                         </div>
-                        <div class="tab-pane" id="profile1" role="tabpanel" aria-expanded="false">
-                            <p class="m-0">2.Cras consequat in enim ut efficitur. Nulla posuere elit quis auctor
-                                interdum praesent sit amet nulla vel enim amet. Donec convallis tellus neque, et
-                                imperdiet felis amet.</p>
+                        <div class="tab-pane" id="contact1" role="tabpanel" aria-expanded="false">
+                            <strong>Email for PR:</strong><a href="mailto:{{ company.email01 }}">
+                                {{ company.email01 }}</a><br>
+                            <strong>Email for Support:</strong><a href="mailto:{{ company.email02 }}">
+                                {{ company.email02 }}</a><br>
+                            <strong>Web Page: </strong> <a href="{{company.webPage}}" target="_blank"
+                                rel="noopener noreferrer">{{ company.webPage }}</a><br>
                         </div>
                         <div class="tab-pane" id="messages1" role="tabpanel" aria-expanded="false">
-                            <p class="m-0">3. This is Photoshop's version of Lorem IpThis is Photoshop's version of
-                                Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem
-                                quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Lorem
-                                ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                                Aenean mas Cum sociis natoque penatibus et magnis dis.....</p>
-                        </div>
-                        <div class="tab-pane" id="settings1" role="tabpanel" aria-expanded="false">
-                            <p class="m-0">4.Cras consequat in enim ut efficitur. Nulla posuere elit quis auctor
-                                interdum praesent sit amet nulla vel enim amet. Donec convallis tellus neque, et
-                                imperdiet felis amet.</p>
+                            <p class="m-0">
+                                <address>
+                                    <strong>Address:</strong><br>
+                                    {{company.line1}} <br>
+                                    {{company.line2}} <br>
+                                    Zip Code: {{company.zipCode}} <br>
+                                    City: {{company.city}} <br>
+                                    State or Province: {{company.state}} <br>
+                                    Country: {{company.country}}
+                                </address>
+                            </p>
                         </div>
                     </div>
                 </div>

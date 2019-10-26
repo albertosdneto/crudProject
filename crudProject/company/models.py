@@ -9,6 +9,9 @@ from PIL import Image
 class Company(models.Model):
     name = models.CharField(max_length=250)
     cnpj = models.CharField(max_length=14)
+    webPage = models.CharField(default="", max_length=250)
+    email01 = models.EmailField(default="", max_length=254)
+    email02 = models.EmailField(default="", max_length=254)
     logo = models.ImageField(
         default='company/default.png', upload_to='company/logo_pics')
 

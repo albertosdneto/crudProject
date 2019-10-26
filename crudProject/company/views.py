@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.decorators.csrf import csrf_protect
 
-from .forms import CompanyForm, CompanyAddressForm
+from .forms import CompanyForm, CompanyFormUpdate, CompanyAddressForm
 from .models import Company
 
 
@@ -44,7 +44,7 @@ def getCompanyDetails(request, pk):
 # Update company details
 def updateCompanyDetails(request, pk):
     company = get_object_or_404(Company, pk=pk)
-    form = CompanyForm(request.POST or None, instance=company)
+    form = CompanyFormUpdate(request.POST or None, instance=company)
 
     if form.is_valid():
         form.save()

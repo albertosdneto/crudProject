@@ -12,6 +12,16 @@ $(function () {
         $.unblockUI();
     });
 
+    $("#companyFormUpdate").submit(function (e) {
+
+        if (!validateCompanyForm("#companyFormUpdate")) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+
+
     setupCompanyTable('#myTable');
 
     // Reload table start
@@ -32,7 +42,7 @@ $(function () {
 });
 
 // Validate form for company creation
-function validateCreateCompanyForm(formID) {
+function validateCompanyForm(formID) {
     if ($.trim($('#id_name').val()) == '') {
         alert("Fill in the Name of the Company!");
         $('#id_name').focus();
@@ -45,6 +55,22 @@ function validateCreateCompanyForm(formID) {
         return false;
     }
 
+    if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#id_email01').val()))) {
+        alert("You have entered an invalid email address!");
+        $('#id_email01').focus();
+        return false;
+    }
+
+    if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#id_email02').val()))) {
+        alert("You have entered an invalid email address!");
+        $('#id_email02').focus();
+        return false;
+    }
+    if (!(/(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/.test($('#id_webPage').val()))) {
+        alert("Fill in Web Page Address. Remember to put http or https at the beginning.");
+        $('#id_webPage').focus();
+        return false;
+    }
     if ($.trim($('#id_line1').val()) == '') {
         alert("Fill in Address Info");
         $('#id_line1').focus();
@@ -83,7 +109,7 @@ function validateCreateCompanyForm(formID) {
 
 }
 function createCompany(serializedData, formID, messageBoxID) {
-    if (validateCreateCompanyForm(formID) == true) {
+    if (validateCompanyForm(formID) == true) {
         $.ajax({
             type: 'POST',
             url: "/ajax/post_new_company/",
@@ -105,6 +131,7 @@ function createCompany(serializedData, formID, messageBoxID) {
     }
 
 }
+
 
 // CSRF token setup start
 // This configuration is necessary to make sure ajax requests
