@@ -12,6 +12,18 @@ $(function () {
         $.unblockUI();
     });
 
+    $("#companyAddressForm").submit(function (e) {
+        // prevent from normal form behaviour
+        e.preventDefault();
+
+        $.blockUI();
+        // serialize the form data  
+        var serializedData = $(this).serialize();
+        createAddress(serializedData, '#companyAddressForm', '#messageBox');
+        $.unblockUI();
+    });
+
+
     $("#companyFormUpdate").submit(function (e) {
 
         if (!validateCompanyForm("#companyFormUpdate")) {
@@ -108,6 +120,7 @@ function validateCompanyForm(formID) {
     return true;
 
 }
+
 function createCompany(serializedData, formID, messageBoxID) {
     if (validateCompanyForm(formID) == true) {
         $.ajax({
@@ -132,6 +145,75 @@ function createCompany(serializedData, formID, messageBoxID) {
 
 }
 
+function createAddress(serializedData, formID, messageBoxID) {
+    if (validateAddressForm(formID) == true) {
+        $.ajax({
+            type: 'POST',
+            url: "/ajax/post_new_address/",
+            data: serializedData,
+            success: function (response) {
+                //reset the form after successful submit
+                // $(formID)[0].reset();
+                $(messageBoxID).attr("class", "alert alert-success col-md-2");
+                $(messageBoxID).find('span').html("<strong>Success!</strong> Company Created");
+                $(messageBoxID).css("display", "block");
+            },
+            error: function (response) {
+                $(messageBoxID).attr("class", "alert alert-danger col-md-2");
+                $(messageBoxID).find('span').html("<strong>Error!</strong> Contact system support.");
+                $(messageBoxID).css("display", "block");
+            }
+        });
+
+    }
+
+}
+
+// Validate form for company creation
+function validateAddressForm(formID) {
+    if ($.trim($('#id_addressType').val()) == '') {
+        alert("Fill in the Address Type!");
+        $('#id_addressType').focus();
+        return false;
+    }
+
+    if ($.trim($('#id_line1').val()) == '') {
+        alert("Fill in Address Info");
+        $('#id_line1').focus();
+        return false;
+    }
+
+    if ($.trim($('#id_line2').val()) == '') {
+        alert("Fill in Address Info");
+        $('#id_line2').focus();
+        return false;
+    }
+    if ($.trim($('#id_zipCode').val()) == '') {
+        alert("Fill in Zip Code");
+        $('#id_zipCode').focus();
+        return false;
+    }
+
+    if ($.trim($('#id_city').val()) == '') {
+        alert("Fill in City");
+        $('#id_city').focus();
+        return false;
+    }
+
+    if ($.trim($('#id_state').val()) == '') {
+        alert("Fill in State or Province");
+        $('#id_state').focus();
+        return false;
+    }
+
+    if ($.trim($('#id_country').val()) == '') {
+        alert("Fill in Country");
+        $('#id_country').focus();
+        return false;
+    }
+    return true;
+
+}
 
 // CSRF token setup start
 // This configuration is necessary to make sure ajax requests

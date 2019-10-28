@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.views.decorators.csrf import csrf_protect
 
 from .forms import CompanyForm, CompanyFormUpdate, CompanyAddressForm
-from .models import Company
+from .models import Company, CompanyAddress
 
 
 # Home page
@@ -35,8 +35,11 @@ def getCompanyList(request):
 # Company details can be edited at this page (yet to implement this function)
 def getCompanyDetails(request, pk):
     company = get_object_or_404(Company, pk=pk)
+    addresses = CompanyAddress.objects.filter(
+        company=company).order_by('zipCode')
     context = {
-        'company': company
+        'company': company,
+        'addresses': addresses,
     }
     return render(request, 'company/company_details.html', context)
 
@@ -93,3 +96,27 @@ def deleteCompany(request, pk):
         else:
             data['message'] = "Error!"
         return JsonResponse(data)
+
+
+def newAddressPage(request):
+    # company = get_object_or_404(Company, pk=pk)
+    form_address = CompanyAddressForm()
+    context = {
+        'company': company,
+        'addressForm': form_address
+    }
+    return render(request, 'company/address_create.html', context)
+
+
+def postNewAddress(request):
+    data = dict()
+    if request.method == "POST" and request.is_ajax():
+        form_address = CompanyAddressForm(request.POST)
+        form_address.save()
+        data['message'] = 'Company created successfully'
+        data['success'] = True
+        return JsonResponse(data, status=200)
+
+    data['message'] = 'Error creating company. Contact system administrator'
+    data['success'] = False
+    return JsonResponse(data, status=400)
