@@ -127,5 +127,31 @@ class CompanyFormUpdate(CompanyForm):
 class CompanyAddressForm(forms.ModelForm):
     class Meta:
         model = CompanyAddress
-        fields = ['addressType', 'line1',
-                  'line2', 'zipCode', 'city', 'state', 'country']
+        # fields = ['addressType', 'line1', 'line2',
+        #           'zipCode', 'city', 'state', 'country']
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = 'companyAddressForm'
+        self.helper.layout = Layout(
+            Row(
+                Column('company', css_class='form-group col-md-6 mb-0'),
+                Column('addressType', css_class='form-group col-md-6 mb-0'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('line1', css_class='form-group col-md-6 mb-0'),
+                Column('line2', css_class='form-group col-md-6 mb-0'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('zipCode', css_class='form-group col-md-2 mb-0'),
+                Column('city', css_class='form-group col-md-2 mb-0'),
+                Column('state', css_class='form-group col-md-4 mb-0'),
+                Column('country', css_class='form-group col-md-4 mb-0'),
+                css_class='form-row'
+            ),
+            Submit('submit', 'Submit')
+        )

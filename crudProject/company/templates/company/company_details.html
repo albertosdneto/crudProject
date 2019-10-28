@@ -63,9 +63,10 @@
                                 rel="noopener noreferrer">{{ company.webPage }}</a><br>
                         </div>
                         <div class="tab-pane" id="messages1" role="tabpanel" aria-expanded="false">
+
                             <p class="m-0">
                                 <address>
-                                    <strong>Address:</strong><br>
+                                    <strong>Main Address:</strong><br>
                                     {{company.line1}} <br>
                                     {{company.line2}} <br>
                                     Zip Code: {{company.zipCode}} <br>
@@ -73,6 +74,25 @@
                                     State or Province: {{company.state}} <br>
                                     Country: {{company.country}}
                                 </address>
+                                {% if addresses %}
+
+                                {% for address in addresses %}
+                                <hr>
+                                <address>
+                                    Type: {{address.addressType}} <br>
+                                    {{address.line1}} <br>
+                                    {{address.line2}} <br>
+                                    Zip Code: {{address.zipCode}} <br>
+                                    City: {{address.city}} <br>
+                                    State or Province: {{address.state}} <br>
+                                    Country: {{address.country}}
+                                </address>
+                                {% endfor %}
+
+                                {% endif %}
+                                <a href="{% url 'company-update' pk=company.pk %}">
+                                    <button class='edit-row btn btn-info'>New Address</button>
+                                </a>
                             </p>
                         </div>
                     </div>
