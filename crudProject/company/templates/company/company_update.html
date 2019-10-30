@@ -38,23 +38,22 @@
 
 </div>
 
-{% if addresses %}
-{{ addresses.management_form }}
-{% for address in addresses %}
+{% comment %} {% if adressesFormSet %}
+{{ adressesFormSet.management_form }}
+{% for address in adressesFormSet %}
 <div class="col-sm-12">
     <div class="card">
         <div class="card-block">
             
             {% crispy address helper %}
 
-            {% comment %} {% include 'company/_address.html' %} {% endcomment %}
 
         </div>
     </div>
 
 </div>
 {% endfor %}
-{% endif %}
+{% endif %} {% endcomment %}
 <!-- Page-content end -->
 
 {% endblock content %}
