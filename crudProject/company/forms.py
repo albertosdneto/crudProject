@@ -155,3 +155,35 @@ class CompanyAddressForm(forms.ModelForm):
             ),
             Submit('submit', 'Submit')
         )
+
+
+class CompanyAddressFormHelper(FormHelper):
+    class Meta:
+        model = CompanyAddress
+        # fields = ['addressType', 'line1', 'line2',
+        #           'zipCode', 'city', 'state', 'country']
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(CompanyAddressFormHelper, self).__init__(*args, **kwargs)
+        self.form_method = 'POST'
+        self.layout = Layout(
+            Row(
+                Column('addressType', css_class='form-group col-md-6 mb-0'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('line1', css_class='form-group col-md-6 mb-0'),
+                Column('line2', css_class='form-group col-md-6 mb-0'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('zipCode', css_class='form-group col-md-2 mb-0'),
+                Column('city', css_class='form-group col-md-2 mb-0'),
+                Column('state', css_class='form-group col-md-4 mb-0'),
+                Column('country', css_class='form-group col-md-4 mb-0'),
+                css_class='form-row'
+            ),
+            Submit('submit', 'Submit')
+        )
+        self.render_required_fields = True
