@@ -25,16 +25,10 @@ $(function () {
 
 
     $("#companyFormUpdate").submit(function (e) {
-        e.preventDefault();
-        $.blockUI();
-
-        let serializedData = $(this).serialize();
-        updateCompany(serializedData, '#companyFormUpdate', '#messageBox');
-        // if (!validateCompanyForm("#companyFormUpdate")) {
-
-        //     return false;
-        // }
-        $.unblockUI();
+        if (validateCompanyForm('#companyFormUpdate') == false) {
+            e.preventDefault();
+            return false;
+        }
     });
 
 
@@ -165,13 +159,13 @@ function updateCompany(serializedData, formID, messageBoxID) {
     if (validateCompanyForm(formID) == true) {
         $.ajax({
             type: 'POST',
-            url: '',
+            url: '/ajax/company/post_update/',
             data: serializedData,
             success: function (response) {
                 //reset the form after successful submit
                 $(formID)[0].reset();
                 $(messageBoxID).attr("class", "alert alert-success col-md-2");
-                $(messageBoxID).find('span').html("<strong>Success!</strong> Company Created");
+                $(messageBoxID).find('span').html("<strong>Success!</strong> Company updated");
                 $(messageBoxID).css("display", "block");
             },
             error: function (response) {
@@ -195,7 +189,7 @@ function createAddress(serializedData, formID, messageBoxID) {
                 //reset the form after successful submit
                 // $(formID)[0].reset();
                 $(messageBoxID).attr("class", "alert alert-success col-md-2");
-                $(messageBoxID).find('span').html("<strong>Success!</strong> Company Created");
+                $(messageBoxID).find('span').html("<strong>Success!</strong>" + response.data.message);
                 $(messageBoxID).css("display", "block");
             },
             error: function (response) {
