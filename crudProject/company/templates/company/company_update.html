@@ -11,70 +11,50 @@
 <!-- Page-header end -->
 
 <!-- Page-content start -->
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="m-b-10">Edit Company Details</h4>
+        </div>
+        <div id="messageBox" style="display: none;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <i class="icofont icofont-close-line-circled"></i>
+            </button>
+
+            <span></span>
+        </div>
+    </div>
+
+</div>
 
 <div class="col-sm-12">
     <div class="card">
-
-        <div class="card-header">
-            <div id="messageBox" style="display: none;">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <i class="icofont icofont-close-line-circled"></i>
-                </button>
-
-                <span></span>
+        <div class="card-block">
+            <div class="card-block">
+                {% crispy companyForm %}
             </div>
         </div>
+    </div>
 
+</div>
+
+{% if addresses %}
+{{ addresses.management_form }}
+{% for address in addresses %}
+<div class="col-sm-12">
+    <div class="card">
         <div class="card-block">
-            <div class="row">
+            
+            {% crispy address helper %}
 
-                <!-- Company Info start -->
-                <div class="col-lg-12 col-xl-12">
-                    <div class="sub-title">Edit Company Details</div>
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs  tabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#home1" role="tab"
-                                aria-expanded="true">General</a>
-                        </li>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#profile1" role="tab"
-                                aria-expanded="false">Contact</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#messages1" role="tab"
-                                aria-expanded="false">Addresses</a>
-                        </li> -->
-                    </ul>
-                    <!-- Tab panes -->
-                    <div class="tab-content tabs card-block">
-                        <div class="tab-pane active" id="home1" role="tabpanel" aria-expanded="true">
-                            <div class="card-block">
-                                {% crispy companyForm %}
-                            </div>
-                        </div>
-                        <!-- <div class="tab-pane" id="profile1" role="tabpanel" aria-expanded="false">
-                            <p class="m-0">2.Cras consequat in enim ut efficitur. Nulla posuere elit quis auctor
-                                interdum praesent sit amet nulla vel enim amet. Donec convallis tellus neque, et
-                                imperdiet felis amet.</p>
-                        </div>
-                        <div class="tab-pane" id="messages1" role="tabpanel" aria-expanded="false">
-                            <p class="m-0">3. This is Photoshop's version of Lorem IpThis is Photoshop's version of
-                                Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem
-                                quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Lorem
-                                ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                                Aenean mas Cum sociis natoque penatibus et magnis dis.....</p>
-                        </div> -->
-                    </div>
-                </div>
-                <!-- Company Info end -->
-
-
-            </div>
+            {% comment %} {% include 'company/_address.html' %} {% endcomment %}
 
         </div>
     </div>
+
 </div>
+{% endfor %}
+{% endif %}
 <!-- Page-content end -->
 
 {% endblock content %}

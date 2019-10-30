@@ -7,7 +7,7 @@ $(function () {
 
         $.blockUI();
         // serialize the form data  
-        var serializedData = $(this).serialize();
+        let serializedData = $(this).serialize();
         createCompany(serializedData, '#companyForm', '#messageBox');
         $.unblockUI();
     });
@@ -18,18 +18,23 @@ $(function () {
 
         $.blockUI();
         // serialize the form data  
-        var serializedData = $(this).serialize();
+        let serializedData = $(this).serialize();
         createAddress(serializedData, '#companyAddressForm', '#messageBox');
         $.unblockUI();
     });
 
 
     $("#companyFormUpdate").submit(function (e) {
+        e.preventDefault();
+        $.blockUI();
 
-        if (!validateCompanyForm("#companyFormUpdate")) {
-            e.preventDefault();
-            return false;
-        }
+        let serializedData = $(this).serialize();
+        updateCompany(serializedData, '#companyFormUpdate', '#messageBox');
+        // if (!validateCompanyForm("#companyFormUpdate")) {
+
+        //     return false;
+        // }
+        $.unblockUI();
     });
 
 
@@ -50,6 +55,17 @@ $(function () {
         deleteCompany(parseInt(pk, 10), '#myTable');
     });
     // Delete Item end
+
+
+    // New Address for company
+    $('#newAddressButton').click(function () {
+        $('#newAddressContainer').attr("class", "col-sm-12");
+        $('#newAddressContainer').css("display", "block");
+    });
+    $('#newAddressCancelButton').click(function () {
+        $('#newAddressContainer').css("display", "none");
+    });
+
 
 });
 
@@ -126,6 +142,30 @@ function createCompany(serializedData, formID, messageBoxID) {
         $.ajax({
             type: 'POST',
             url: "/ajax/post_new_company/",
+            data: serializedData,
+            success: function (response) {
+                //reset the form after successful submit
+                $(formID)[0].reset();
+                $(messageBoxID).attr("class", "alert alert-success col-md-2");
+                $(messageBoxID).find('span').html("<strong>Success!</strong> Company Created");
+                $(messageBoxID).css("display", "block");
+            },
+            error: function (response) {
+                $(messageBoxID).attr("class", "alert alert-danger col-md-2");
+                $(messageBoxID).find('span').html("<strong>Error!</strong> Contact system support.");
+                $(messageBoxID).css("display", "block");
+            }
+        });
+
+    }
+
+}
+
+function updateCompany(serializedData, formID, messageBoxID) {
+    if (validateCompanyForm(formID) == true) {
+        $.ajax({
+            type: 'POST',
+            url: '',
             data: serializedData,
             success: function (response) {
                 //reset the form after successful submit
@@ -333,8 +373,10 @@ function setupCompanyTable(tableID) {
 
         createdRow: function (row, data, dataIndex) {
             pk = $(row).closest('tr').attr('id').substr(3);
-            $(row).find('a:eq(0)')
-                .attr({ 'href': "/company/details/" + pk });
+            $(row).find('a:eq(0)').attr({ 'href': "/company/details/" + pk });
+
+            // .attr({ 'href': "/company/details/" + pk });
+
             $(row).find('a:eq(1)')
                 .attr({ 'href': "/company/update/" + pk });
         }

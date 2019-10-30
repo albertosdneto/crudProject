@@ -1,8 +1,9 @@
+from django.forms import inlineformset_factory
 from django.http import JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.decorators.csrf import csrf_protect
 
-from .forms import CompanyForm, CompanyFormUpdate, CompanyAddressForm
+from .forms import CompanyForm, CompanyFormUpdate, CompanyAddressForm, CompanyAddressFormHelper
 from .models import Company, CompanyAddress
 
 
@@ -37,9 +38,11 @@ def getCompanyDetails(request, pk):
     company = get_object_or_404(Company, pk=pk)
     addresses = CompanyAddress.objects.filter(
         company=company).order_by('zipCode')
+    form_address = CompanyAddressForm()
     context = {
         'company': company,
         'addresses': addresses,
+        'addressForm': form_address,
     }
     return render(request, 'company/company_details.html', context)
 
@@ -47,14 +50,31 @@ def getCompanyDetails(request, pk):
 # Update company details
 def updateCompanyDetails(request, pk):
     company = get_object_or_404(Company, pk=pk)
-    form = CompanyFormUpdate(request.POST or None, instance=company)
+    form_company = CompanyFormUpdate(request.POST or None, instance=company)
 
-    if form.is_valid():
-        form.save()
-        return redirect('/company/details/' + str(pk))
+    CompanyAddressFormSet = inlineformset_factory(
+        Company, CompanyAddress, fields=('__all__')
+    )
+    data = dict()
+    if request.method == "POST" and request.is_ajax():
+        adressesFormSet = CompanyAddressFormSet(
+            request.POST, request.FILES, instance=company)
+        if form_company.is_valid():
+            form_company.save()
+
+        if adressesFormSet.is_valid():
+            adressesFormSet.save()
+            data['message'] = 'Company created successfully'
+            data['success'] = True
+            return JsonResponse(data, status=200)
+    else:
+        adressesFormSet = CompanyAddressFormSet(instance=company)
+        helper = CompanyAddressFormHelper()
 
     context = {
-        'companyForm': form
+        'companyForm': form_company,
+        'addresses': adressesFormSet,
+        'helper': helper,
     }
 
     return render(request, 'company/company_update.html', context)
