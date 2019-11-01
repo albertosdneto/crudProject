@@ -77,31 +77,30 @@ def getCompanyDetails(request, pk):
     }
     return render(request, 'company/company_details.html', context)
 
-
-def updateCompanyDetails(request, pk):
-    """Updates company information
-
-    Arguments:
-        request {GET} -- [description]
-        pk {integer} -- This is the integer corresponding to the id of the company at the database 
-
-    Returns:
-        If method is GET -- shows template to allow the user to change data related to the company
-        If method is POST -- Saves the form (if valid) and Redirects to getCompanyDetails view
-    """
+def editCompany(request, pk):
     company = get_object_or_404(Company, pk=pk)
-    form = CompanyFormUpdate(request.POST or None, instance=company)
-
-    if request.method == "POST":
-        if form.is_valid():
-            form.save()
-            return redirect('/company/details/' + str(pk))
-
     context = {
-        'companyForm': form
+        'company': company
     }
+    return render(request, 'company/company_edit.html', context)
+    
+def updateCompanyDetails(request, pk):
+    data = dict()
+    try:
+        company = Company.objects.get(pk=pk)
+        company.name = request.POST['name']
+        company.save()
+        
+        data['message'] = 'Company updated successfully!'
+        data['success'] = True
+        return JsonResponse(data, status=200)
+    except:
+        data['message'] = 'Error during update. Contact Support.'
+        data['success'] = False
+        return JsonResponse(data, status=400)
 
-    return render(request, 'company/company_update.html', context)
+
+
 
 
 def newCompanytPage(request):
