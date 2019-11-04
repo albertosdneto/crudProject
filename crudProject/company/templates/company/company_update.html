@@ -14,7 +14,7 @@
 <div class="col-sm-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="m-b-10">Edit Company Details</h4>
+            <h4 class="m-b-10">Edit Company</h4>
         </div>
         <div id="messageBox" style="display: none;">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -30,30 +30,219 @@
 <div class="col-sm-12">
     <div class="card">
         <div class="card-block">
-            <div class="card-block">
-                {% crispy companyForm %}
-            </div>
+
+
+            <form action="{% url 'company:update' company_pk=company.id %}" method="POST" id="companyFormUpdate">
+                {% csrf_token %}
+
+                 <div class="form-row form-row">
+                    <div class="formColumn form-group col-md-6 mb-0">
+                        <div id="div_id_name" class="form-group"> <label for="id_name" class=" requiredField">
+                                Name<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="name" value="{{ company.name }}" maxlength="250"
+                                    class="textinput textInput form-control" required id="id_name"> </div>
+                        </div>
+                    </div>
+                    <div class="formColumn form-group col-md-6 mb-0">
+                        <div id="div_id_cnpj" class="form-group"> <label for="id_cnpj" class=" requiredField">
+                                Tax ID Number<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="cnpj" value="{{ company.cnpj }}" size="15"
+                                    class="textinput textInput form-control" required id="id_cnpj"> </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row form-row">
+                    <div class="formColumn form-group col-md-6 mb-0">
+                        <div id="div_id_email01" class="form-group"> <label for="id_email01" class=" requiredField">
+                                Email for Public Relations<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="email01" value="{{ company.email01 }}"
+                                    placehoolder="Email for PR" class="textinput textInput form-control" required
+                                    id="id_email01"> </div>
+                        </div>
+                    </div>
+                    <div class="formColumn form-group col-md-6 mb-0">
+                        <div id="div_id_email02" class="form-group"> <label for="id_email02" class=" requiredField">
+                                Email for Support<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="email02" value="{{ company.email02 }}"
+                                    placehoolder="Email for Support" class="textinput textInput form-control" required
+                                    id="id_email02"> </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-row form-row">
+                    <div class="formColumn form-group col-md-6 mb-0">
+                        <div id="div_id_line1" class="form-group"> <label for="id_line1" class=" requiredField">
+                                Address<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="line1" value="{{ company.line1 }}"
+                                    placeholder="Street and Number" class="textinput textInput form-control" required
+                                    id="id_line1"> </div>
+                        </div>
+                    </div>
+                    <div class="formColumn form-group col-md-6 mb-0">
+                        <div id="div_id_line2" class="form-group"> <label for="id_line2" class=" requiredField"> <span
+                                    class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="line2" value="{{ company.line2 }}"
+                                    placeholder="Apartment, studio, or floor" class="textinput textInput form-control"
+                                    required id="id_line2"> </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-row form-row">
+                    <div class="formColumn form-group col-md-2 mb-0">
+                        <div id="div_id_zipCode" class="form-group"> <label for="id_zipCode" class=" requiredField">
+                                ZipCode<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="zipCode" value="{{ company.zipCode }}"
+                                    maxlength="50" class="textinput textInput form-control" required id="id_zipCode">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formColumn form-group col-md-2 mb-0">
+                        <div id="div_id_city" class="form-group"> <label for="id_city" class=" requiredField">
+                                City<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="city" value="{{ company.city }}" maxlength="100"
+                                    class="textinput textInput form-control" required id="id_city"> </div>
+                        </div>
+                    </div>
+                    <div class="formColumn form-group col-md-4 mb-0">
+                        <div id="div_id_state" class="form-group"> <label for="id_state" class=" requiredField">
+                                State<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="state" value="{{ company.state }}" maxlength="100"
+                                    class="textinput textInput form-control" required id="id_state"> </div>
+                        </div>
+                    </div>
+                    <div class="formColumn form-group col-md-4 mb-0">
+                        <div id="div_id_country" class="form-group"> <label for="id_country" class=" requiredField">
+                                Country<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="country" value="{{ company.country }}"
+                                    maxlength="100" class="textinput textInput form-control" required id="id_country">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-row form-row">
+                    <div class="formColumn form-group col-md-2 mb-0">
+                        <div id="div_id_webPage" class="form-group"> <label for="id_webPage" class=" requiredField">
+                                Web Page<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="webPage" value="{{ company.webPage }}"
+                                    placeholder="Web Page" class="textinput textInput form-control" required
+                                    id="id_webPage"> </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div id="div_id_logo" class="form-group"> <label for="id_logo" class="">Logo</label>
+                        <div class="custom-file ">
+                            Currently: <a href="{{ company.logo.url }}">{{ company.logo.url }}</a><br>
+                            Change:
+                            <input type="file" name="logo" accept="image/*" class="clearablefileinput form-control "
+                                id="id_logo"> </div>
+                    </div>
+                </div> 
+                <!-- Addresses start -->
+
+                <hr>
+                {% for address in addresses %}
+                <div class="card">
+                    <div class="card-block">
+                        <div class="form-row form-row">
+                            <div class="formColumn form-group col-md-6 mb-0">
+                                <div id="div_id_addressType" class="form-group">
+                                    <label for="id_addressType" class=" requiredField">
+                                        AddressType<span class="asteriskField">*</span>
+                                    </label>
+                                    <div class="">
+                                        <input type="text" name="addressType" maxlength="50"
+                                            class="textinput textInput form-control" required id="id_addressType"
+                                            value="{{address.addressType}}">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-row form-row">
+                            <div class="formColumn form-group col-md-6 mb-0">
+                                <div id="div_id_line1" class="form-group"> <label for="id_line1" class=" requiredField">
+                                        Line1<span class="asteriskField">*</span> </label>
+                                    <div class=""> <input type="text" name="line1" maxlength="200"
+                                            class="textinput textInput form-control" required id="id_line1"
+                                            value="{{address.line1}}"> </div>
+                                </div>
+                            </div>
+                            <div class="formColumn form-group col-md-6 mb-0">
+                                <div id="div_id_line2" class="form-group"> <label for="id_line2" class=" requiredField">
+                                        Line2<span class="asteriskField">*</span> </label>
+                                    <div class=""> <input type="text" name="line2" maxlength="200"
+                                            class="textinput textInput form-control" required id="id_line2"
+                                            value="{{address.line2}}"> </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-row form-row">
+                            <div class="formColumn form-group col-md-2 mb-0">
+                                <div id="div_id_zipCode" class="form-group"> <label for="id_zipCode"
+                                        class=" requiredField">
+                                        ZipCode<span class="asteriskField">*</span> </label>
+                                    <div class=""> <input type="text" name="zipCode" maxlength="50"
+                                            class="textinput textInput form-control" required id="id_zipCode"
+                                            value="{{address.zipCode}}"> </div>
+                                </div>
+                            </div>
+                            <div class="formColumn form-group col-md-2 mb-0">
+                                <div id="div_id_city" class="form-group"> <label for="id_city" class=" requiredField">
+                                        City<span class="asteriskField">*</span> </label>
+                                    <div class=""> <input type="text" name="city" maxlength="100"
+                                            class="textinput textInput form-control" required id="id_city"
+                                            value="{{address.city}}"> </div>
+                                </div>
+                            </div>
+                            <div class="formColumn form-group col-md-4 mb-0">
+                                <div id="div_id_state" class="form-group"> <label for="id_state" class=" requiredField">
+                                        State<span class="asteriskField">*</span> </label>
+                                    <div class=""> <input type="text" name="state" maxlength="100"
+                                            class="textinput textInput form-control" required id="id_state"
+                                            value="{{address.state}}"> </div>
+                                </div>
+                            </div>
+                            <div class="formColumn form-group col-md-4 mb-0">
+                                <div id="div_id_country" class="form-group"> <label for="id_country"
+                                        class=" requiredField">
+                                        Country<span class="asteriskField">*</span> </label>
+                                    <div class=""> <input type="text" name="country" maxlength="100"
+                                            class="textinput textInput form-control" required id="id_country"
+                                            value="{{address.country}}"> </div>
+                                </div>
+                            </div>
+                            <button class='add-address btn btn-info'>Add Another</button>
+                            <button class='remove-address btn btn-danger'>Remove This</button>
+                        </div>
+                    </div>
+                </div>
+                <hr> 
+                {% endfor %}
+                
+                <!-- Addresses End -->
+                
+                 <input type="submit" name="submit" value="Submit" class="btn btn-primary" id="submit-id-submit" />
+
+            </form> 
+             {% comment %} <form action="{% url 'company:update' company_pk=company.id %}" method="POST"
+                id="companyFormUpdate">
+                {% csrf_token %} 
+                {% crispy company_form %}
+             </form>  {% endcomment %}
         </div>
     </div>
+</div>
 
 </div>
 
-{% comment %} {% if adressesFormSet %}
-{{ adressesFormSet.management_form }}
-{% for address in adressesFormSet %}
-<div class="col-sm-12">
-    <div class="card">
-        <div class="card-block">
-            
-            {% crispy address helper %}
-
-
-        </div>
-    </div>
-
-</div>
-{% endfor %}
-{% endif %} {% endcomment %}
 <!-- Page-content end -->
 
 {% endblock content %}
@@ -62,4 +251,5 @@
 <script type="text/javascript" charset="utf8" src="{% static 'DataTables/datatables.js' %}"></script>
 <script src="{% static 'company/js/companyApp.js' %}"></script>
 <script src="{% static 'js/jquery.blockUI.js' %}"></script>
+
 {% endblock scripts %}

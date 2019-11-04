@@ -13,7 +13,7 @@
     <div class="card">
         <div class="card-header">
             <h4 class="m-b-10">{{ company.name }}</h4>
-            <a href="{% url 'company-update' pk=company.pk %}">
+            <a href="{% url 'company:update' company_pk=company.pk %}">
                 <button class='edit-row btn btn-warning'>Edit</button>
             </a>
         </div>
