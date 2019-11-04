@@ -12,36 +12,53 @@ $(function () {
         $.unblockUI();
     });
 
-    $("#companyFormUpdate").submit(function (e) {
-        e.preventDefault();
-        $.blockUI();
-        $id = $('#company_id').attr('value');
-        if (validateCompanyForm('#companyFormUpdate') == false) {
-            alert("Please complete the required field");
-            return false;
-        } else {
-            $name = $('#id_name').val();
-            $.ajax({
-                url: '/company/update/' + $id,
-                type: 'POST',
-                data: {
-                    name: $name,
-                    // csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-                },
-                success: function (response) {
-                    $('#messageBox').attr("class", "alert alert-success col-md-6");
-                    $('#messageBox').find('span').html("<strong>Success!</strong> " + response.message);
-                    $('#messageBox').css("display", "block");
-                },
-                error: function (response) {
-                    $('#messageBox').attr("class", "alert alert-danger col-md-6");
-                    $('#messageBox').find('span').html("<strong>Error!</strong> Contact system support.");
-                    $('#messageBox').css("display", "block");
-                }
-            });
-        }
-        $.unblockUI();
-    });
+    // Options for company update
+    let options = {
+        success: function (response) {
+            $('#messageBox').attr("class", "alert alert-success col-md-6");
+            $('#messageBox').find('span').html("<strong>Success!</strong><br>" + response.message);
+            $('#messageBox').css("display", "block");
+        },
+        error: function (response) {
+            $('#messageBox').attr("class", "alert alert-danger col-md-6");
+            $('#messageBox').find('span').html("<strong>Error! </strong> Contact System support.<br>" + response.message);
+            $('#messageBox').css("display", "block");
+        },
+    };
+    $('#companyFormUpdate').ajaxForm(options);
+
+    // $("#companyFormUpdate").submit(function (e) {
+    //     e.preventDefault();
+    //     $.blockUI();
+    //     let serializedData = $(this).serialize();
+    //     $id = $('#company_id').attr('value');
+    //     if (false) {//(validateCompanyForm('#companyFormUpdate') == false) {
+    //         alert("Please complete the required field");
+    //         return false;
+    //     } else {
+    //         $name = $('#id_name').val();
+    //         $.ajax({
+    //             url: '/company/update/' + $id,
+    //             type: 'POST',
+    //             data: serializedData,
+    //             // data: {
+    //             //     name: $name,
+    //             //     // csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+    //             // },
+    //             success: function (response) {
+    //                 $('#messageBox').attr("class", "alert alert-success col-md-6");
+    //                 $('#messageBox').find('span').html("<strong>Success!</strong><br>" + response.message);
+    //                 $('#messageBox').css("display", "block");
+    //             },
+    //             error: function (response) {
+    //                 $('#messageBox').attr("class", "alert alert-danger col-md-6");
+    //                 $('#messageBox').find('span').html("<strong>Error! </strong> Contact System support.<br>" + response.message);
+    //                 $('#messageBox').css("display", "block");
+    //             }
+    //         });
+    //     }
+    //     $.unblockUI();
+    // });
 
     $("#companyAddressForm").submit(function (e) {
         // prevent from normal form behaviour
@@ -394,7 +411,7 @@ function setupCompanyTable(tableID) {
             // .attr({ 'href': "/company/details/" + pk });
 
             $(row).find('a:eq(1)')
-                .attr({ 'href': "/company/edit/" + pk });
+                .attr({ 'href': "/company/update/" + pk });
         }
     });
 }

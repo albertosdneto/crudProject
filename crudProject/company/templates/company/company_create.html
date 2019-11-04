@@ -37,7 +37,113 @@
             </div>
         </div>
         <div class="card-block">
-            {% crispy companyForm %}
+            <form action="{% url 'company:create' %}" method="POST" id="companyForm">
+                {% csrf_token %}
+                <div class="form-row form-row">
+                    <div class="formColumn form-group col-md-6 mb-0">
+                        <div id="div_id_name" class="form-group"> <label for="id_name" class=" requiredField">
+                                Name<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="name" maxlength="250"
+                                    class="textinput textInput form-control" required id="id_name"> </div>
+                        </div>
+                    </div>
+                    <div class="formColumn form-group col-md-6 mb-0">
+                        <div id="div_id_cnpj" class="form-group"> <label for="id_cnpj" class=" requiredField">
+                                Tax ID Number<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="cnpj" size="15"
+                                    class="textinput textInput form-control" required id="id_cnpj"> </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row form-row">
+                    <div class="formColumn form-group col-md-6 mb-0">
+                        <div id="div_id_email01" class="form-group"> <label for="id_email01" class=" requiredField">
+                                Email for Public Relations<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="email01" placehoolder="Email for PR"
+                                    class="textinput textInput form-control" required id="id_email01"> </div>
+                        </div>
+                    </div>
+                    <div class="formColumn form-group col-md-6 mb-0">
+                        <div id="div_id_email02" class="form-group"> <label for="id_email02" class=" requiredField">
+                                Email for Support<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="email02" placehoolder="Email for Support"
+                                    class="textinput textInput form-control" required id="id_email02"> </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-row form-row">
+                    <div class="formColumn form-group col-md-6 mb-0">
+                        <div id="div_id_line1" class="form-group"> <label for="id_line1" class=" requiredField">
+                                Address<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="line1" placeholder="Street and Number"
+                                    class="textinput textInput form-control" required id="id_line1"> </div>
+                        </div>
+                    </div>
+                    <div class="formColumn form-group col-md-6 mb-0">
+                        <div id="div_id_line2" class="form-group"> <label for="id_line2" class=" requiredField"> <span
+                                    class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="line2" placeholder="Apartment, studio, or floor"
+                                    class="textinput textInput form-control" required id="id_line2"> </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-row form-row">
+                    <div class="formColumn form-group col-md-2 mb-0">
+                        <div id="div_id_zipCode" class="form-group"> <label for="id_zipCode" class=" requiredField">
+                                ZipCode<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="zipCode" maxlength="50"
+                                    class="textinput textInput form-control" required id="id_zipCode">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formColumn form-group col-md-2 mb-0">
+                        <div id="div_id_city" class="form-group"> <label for="id_city" class=" requiredField">
+                                City<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="city" maxlength="100"
+                                    class="textinput textInput form-control" required id="id_city"> </div>
+                        </div>
+                    </div>
+                    <div class="formColumn form-group col-md-4 mb-0">
+                        <div id="div_id_state" class="form-group"> <label for="id_state" class=" requiredField">
+                                State<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="state" maxlength="100"
+                                    class="textinput textInput form-control" required id="id_state"> </div>
+                        </div>
+                    </div>
+                    <div class="formColumn form-group col-md-4 mb-0">
+                        <div id="div_id_country" class="form-group"> <label for="id_country" class=" requiredField">
+                                Country<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="country" maxlength="100"
+                                    class="textinput textInput form-control" required id="id_country">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-row form-row">
+                    <div class="formColumn form-group col-md-2 mb-0">
+                        <div id="div_id_webPage" class="form-group"> <label for="id_webPage" class=" requiredField">
+                                Web Page<span class="asteriskField">*</span> </label>
+                            <div class=""> <input type="text" name="webPage" placeholder="Web Page"
+                                    class="textinput textInput form-control" required id="id_webPage"> </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div id="div_id_logo" class="form-group"> <label for="id_logo" class="">Logo</label>
+                        <div class="custom-file ">
+
+                            <input type="file" name="logo" accept="image/*" class="clearablefileinput form-control "
+                                id="id_logo"> </div>
+                    </div>
+                </div>
+                <input type="submit" name="submit" value="Submit" class="btn btn-primary" id="submit-id-submit" />
+            </form>
         </div>
     </div>
 </div>

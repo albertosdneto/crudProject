@@ -35,7 +35,7 @@ class CompanyForm(forms.ModelForm):
 
     )
     webPage = forms.CharField(
-        label=' ',
+        label='Web Page',
         widget=forms.TextInput(
             attrs={'placeholder': 'Web Page'})
     )
@@ -48,7 +48,7 @@ class CompanyForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_id = 'companyForm'
+        # self.helper.form_id = 'companyForm'
         self.helper.layout = Layout(
             Row(
                 Column('name', css_class='form-group col-md-6 mb-0'),
@@ -82,46 +82,52 @@ class CompanyForm(forms.ModelForm):
         )
 
 
-class CompanyFormUpdate(CompanyForm):
+class CompanyFormUpdate(forms.ModelForm):
     class Meta:
         model = Company
         fields = '__all__'
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_id = 'companyFormUpdate'
-        self.helper.layout = Layout(
-            Row(
-                Column('name', css_class='form-group col-md-6 mb-0'),
-                Column('cnpj', css_class='form-group col-md-6 mb-0'),
-                css_class='form-row'
-            ),
-            Row(
-                Column('email01', css_class='form-group col-md-6 mb-0'),
-                Column('email02', css_class='form-group col-md-6 mb-0'),
-                css_class='form-row'
-            ),
-            Row(
-                Column('line1', css_class='form-group col-md-6 mb-0'),
-                Column('line2', css_class='form-group col-md-6 mb-0'),
-                css_class='form-row'
-            ),
-            Row(
-                Column('zipCode', css_class='form-group col-md-2 mb-0'),
-                Column('city', css_class='form-group col-md-2 mb-0'),
-                Column('state', css_class='form-group col-md-4 mb-0'),
-                Column('country', css_class='form-group col-md-4 mb-0'),
-                css_class='form-row'
-            ),
-            Row(
-                Column('webPage', css_class='form-group col-md-2 mb-0'),
-                css_class='form-row'
-            ),
 
-            CustomImageField('logo'),
-            Submit('submit', 'Submit')
-        )
+# class CompanyFormUpdate(CompanyForm):
+#     class Meta:
+#         model = Company
+#         fields = '__all__'
+
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.helper = FormHelper()
+#         self.helper.form_id = 'companyFormUpdate'
+#         self.helper.layout = Layout(
+#             Row(
+#                 Column('name', css_class='form-group col-md-6 mb-0'),
+#                 Column('cnpj', css_class='form-group col-md-6 mb-0'),
+#                 css_class='form-row'
+#             ),
+#             Row(
+#                 Column('email01', css_class='form-group col-md-6 mb-0'),
+#                 Column('email02', css_class='form-group col-md-6 mb-0'),
+#                 css_class='form-row'
+#             ),
+#             Row(
+#                 Column('line1', css_class='form-group col-md-6 mb-0'),
+#                 Column('line2', css_class='form-group col-md-6 mb-0'),
+#                 css_class='form-row'
+#             ),
+#             Row(
+#                 Column('zipCode', css_class='form-group col-md-2 mb-0'),
+#                 Column('city', css_class='form-group col-md-2 mb-0'),
+#                 Column('state', css_class='form-group col-md-4 mb-0'),
+#                 Column('country', css_class='form-group col-md-4 mb-0'),
+#                 css_class='form-row'
+#             ),
+#             Row(
+#                 Column('webPage', css_class='form-group col-md-2 mb-0'),
+#                 css_class='form-row'
+#             ),
+
+#             CustomImageField('logo'),
+#             Submit('submit', 'Submit')
+#         )
 
 
 class CompanyAddressForm(forms.ModelForm):
