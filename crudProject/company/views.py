@@ -29,7 +29,7 @@ def getCompanyList(request):
     return JsonResponse({"success": False}, status=400)
 
 
-def getCompanyDetails(request, pk):
+def read_company(request, pk):
     company = get_object_or_404(Company, pk=pk)
     addresses = CompanyAddress.objects.filter(
         company=company).order_by('zipCode')
@@ -62,31 +62,6 @@ def update_company(request, company_pk):
         'addresses': addresses,
     }
     return render(request, 'company/company_update.html', context)
-
-
-def editCompany(request, pk):
-    company = get_object_or_404(Company, pk=pk)
-    context = {
-        'company': company
-    }
-    return render(request, 'company/company_edit.html', context)
-
-
-def updateCompanyDetails(request, pk):
-    data = dict()
-    try:
-        company = Company.objects.get(pk=pk)
-        company.name = request.POST['name']
-        company
-        company.save()
-
-        data['message'] = 'Company updated successfully!'
-        data['success'] = True
-        return JsonResponse(data, status=200)
-    except:
-        data['message'] = 'Error during update. Contact Support.'
-        data['success'] = False
-        return JsonResponse(data, status=400)
 
 
 def newCompanytPage(request):
@@ -146,3 +121,15 @@ def postNewAddress(request):
     data['message'] = 'Error creating company. Contact system administrator'
     data['success'] = False
     return JsonResponse(data, status=400)
+
+
+def delete_address(request, address_pk):
+    if request.method == "POST" and request.is_ajax():
+        data = dict()
+        address = CompanyAddress.objects.get(pk=address_pk)
+        if address:
+            address.delete()
+            data['message'] = "Address deleted!"
+        else:
+            data['message'] = "Error!"
+        return JsonResponse(data)
