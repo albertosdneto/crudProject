@@ -35,7 +35,7 @@
             <form action="{% url 'company:update' company_pk=company.id %}" method="POST" id="companyFormUpdate">
                 {% csrf_token %}
 
-                 <div class="form-row form-row">
+                <div class="form-row form-row">
                     <div class="formColumn form-group col-md-6 mb-0">
                         <div id="div_id_name" class="form-group"> <label for="id_name" class=" requiredField">
                                 Name<span class="asteriskField">*</span> </label>
@@ -143,12 +143,13 @@
                             <input type="file" name="logo" accept="image/*" class="clearablefileinput form-control "
                                 id="id_logo"> </div>
                     </div>
-                </div> 
+                </div>
                 <!-- Addresses start -->
-
+                <a class='create-address btn btn-info'>Add Address</a>
                 <hr>
                 {% for address in addresses %}
-                <div class="card">
+                <div class="card address-block">
+
                     <div class="card-block">
                         <div class="form-row form-row">
                             <div class="formColumn form-group col-md-6 mb-0">
@@ -219,30 +220,98 @@
                                             value="{{address.country}}"> </div>
                                 </div>
                             </div>
-                            <button class='add-address btn btn-info'>Add Another</button>
-                            <button class='remove-address btn btn-danger'>Remove This</button>
+                            <a class='create-address btn btn-info'>Add Another</a>
+                            <a class='delete-address btn btn-danger' addressid='{{ address.id }}'>Remove This</a>
                         </div>
                     </div>
+                    <hr>
                 </div>
-                <hr> 
-                {% endfor %}
-                
-                <!-- Addresses End -->
-                
-                 <input type="submit" name="submit" value="Submit" class="btn btn-primary" id="submit-id-submit" />
 
-            </form> 
-             {% comment %} <form action="{% url 'company:update' company_pk=company.id %}" method="POST"
-                id="companyFormUpdate">
-                {% csrf_token %} 
-                {% crispy company_form %}
-             </form>  {% endcomment %}
+                {% endfor %}
+
+                <!-- Addresses End -->
+
+                <input type="submit" name="submit" value="Submit" class="btn btn-primary" id="submit-id-submit" />
+
+            </form>
         </div>
     </div>
 </div>
 
 </div>
 
+<div id="address-block-model" class='card address-block' style="display: none;">
+    <div class='card-block'>
+        <div class='form-row form-row'>
+            <div class='formColumn form-group col-md-6 mb-0'>
+                <div id='div_id_addressType' class='form-group'>
+                    <label for='id_addressType' class=' requiredField'>
+                        AddressType<span class='asteriskField'>*</span>
+                    </label>
+                    <div class=''>
+                        <input type='text' name='addressType' maxlength='50' class='textinput textInput form-control'
+                            id='id_addressType' value='{{address.addressType}}'>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class='form-row form-row'>
+            <div class='formColumn form-group col-md-6 mb-0'>
+                <div id='div_id_line1' class='form-group'> <label for='id_line1' class=' requiredField'>
+                        Line1<span class='asteriskField'>*</span> </label>
+                    <div class=''> <input type='text' name='line1' maxlength='200'
+                            class='textinput textInput form-control' id='id_line1' value='{{address.line1}}'>
+                    </div>
+                </div>
+            </div>
+            <div class='formColumn form-group col-md-6 mb-0'>
+                <div id='div_id_line2' class='form-group'> <label for='id_line2' class=' requiredField'>
+                        Line2<span class='asteriskField'>*</span> </label>
+                    <div class=''> <input type='text' name='line2' maxlength='200'
+                            class='textinput textInput form-control' id='id_line2' value='{{address.line2}}'>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class='form-row form-row'>
+            <div class='formColumn form-group col-md-2 mb-0'>
+                <div id='div_id_zipCode' class='form-group'> <label for='id_zipCode' class=' requiredField'>
+                        ZipCode<span class='asteriskField'>*</span> </label>
+                    <div class=''> <input type='text' name='zipCode' maxlength='50'
+                            class='textinput textInput form-control' id='id_zipCode' value='{{address.zipCode}}'> </div>
+                </div>
+            </div>
+            <div class='formColumn form-group col-md-2 mb-0'>
+                <div id='div_id_city' class='form-group'> <label for='id_city' class=' requiredField'>
+                        City<span class='asteriskField'>*</span> </label>
+                    <div class=''> <input type='text' name='city' maxlength='100'
+                            class='textinput textInput form-control' id='id_city' value='{{address.city}}'>
+                    </div>
+                </div>
+            </div>
+            <div class='formColumn form-group col-md-4 mb-0'>
+                <div id='div_id_state' class='form-group'> <label for='id_state' class=' requiredField'>
+                        State<span class='asteriskField'>*</span> </label>
+                    <div class=''> <input type='text' name='state' maxlength='100'
+                            class='textinput textInput form-control' id='id_state' value='{{address.state}}'>
+                    </div>
+                </div>
+            </div>
+            <div class='formColumn form-group col-md-4 mb-0'>
+                <div id='div_id_country' class='form-group'> <label for='id_country' class=' requiredField'>
+                        Country<span class='asteriskField'>*</span> </label>
+                    <div class=''> <input type='text' name='country' maxlength='100'
+                            class='textinput textInput form-control' id='id_country' value='{{address.country}}'> </div>
+                </div>
+            </div>
+            <a class='create-address btn btn-info'>Add Another</a>
+            <a class='delete-address btn btn-danger' addressid='null'>Remove This</a>
+        </div>
+    </div>
+    <hr>
+</div>
 <!-- Page-content end -->
 
 {% endblock content %}

@@ -27,50 +27,6 @@ $(function () {
     };
     $('#companyFormUpdate').ajaxForm(options);
 
-    // $("#companyFormUpdate").submit(function (e) {
-    //     e.preventDefault();
-    //     $.blockUI();
-    //     let serializedData = $(this).serialize();
-    //     $id = $('#company_id').attr('value');
-    //     if (false) {//(validateCompanyForm('#companyFormUpdate') == false) {
-    //         alert("Please complete the required field");
-    //         return false;
-    //     } else {
-    //         $name = $('#id_name').val();
-    //         $.ajax({
-    //             url: '/company/update/' + $id,
-    //             type: 'POST',
-    //             data: serializedData,
-    //             // data: {
-    //             //     name: $name,
-    //             //     // csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-    //             // },
-    //             success: function (response) {
-    //                 $('#messageBox').attr("class", "alert alert-success col-md-6");
-    //                 $('#messageBox').find('span').html("<strong>Success!</strong><br>" + response.message);
-    //                 $('#messageBox').css("display", "block");
-    //             },
-    //             error: function (response) {
-    //                 $('#messageBox').attr("class", "alert alert-danger col-md-6");
-    //                 $('#messageBox').find('span').html("<strong>Error! </strong> Contact System support.<br>" + response.message);
-    //                 $('#messageBox').css("display", "block");
-    //             }
-    //         });
-    //     }
-    //     $.unblockUI();
-    // });
-
-    $("#companyAddressForm").submit(function (e) {
-        // prevent from normal form behaviour
-        e.preventDefault();
-
-        $.blockUI();
-        // serialize the form data  
-        let serializedData = $(this).serialize();
-        createAddress(serializedData, '#companyAddressForm', '#messageBox');
-        $.unblockUI();
-    });
-
 
     setupCompanyTable('#myTable');
 
@@ -89,15 +45,47 @@ $(function () {
     });
     // Delete Item end
 
+    $("#companyAddressForm").submit(function (e) {
+        // prevent from normal form behaviour
+        e.preventDefault();
 
-    // New Address for company
-    $('#newAddressButton').click(function () {
-        $('#newAddressContainer').attr("class", "col-sm-12");
-        $('#newAddressContainer').css("display", "block");
+        $.blockUI();
+        // serialize the form data  
+        let serializedData = $(this).serialize();
+        createAddress(serializedData, '#companyAddressForm', '#messageBox');
+        $.unblockUI();
     });
-    $('#newAddressCancelButton').click(function () {
-        $('#newAddressContainer').css("display", "none");
+
+    // Create New Address Inputs start
+
+    $('a.create-address').click(function () {
+        $('#address-block-model').clone(true).insertBefore('#submit-id-submit').css('display', 'block');
     });
+    // Create Address end
+
+    // Delete Address start
+
+    $('a.delete-address').click(function () {
+        if ($(this).attr('addressid') == 'null') {
+            $(this).closest('.address-block').remove();
+        }
+        else {
+            deleteAddress($(this).attr('addressid'));
+            $(this).closest('.address-block').remove();
+        }
+
+    });
+    // Delete Address end
+
+
+    // // New Address for company
+    // $('#newAddressButton').click(function () {
+    //     $('#newAddressContainer').attr("class", "col-sm-12");
+    //     $('#newAddressContainer').css("display", "block");
+    // });
+    // $('#newAddressCancelButton').click(function () {
+    //     $('#newAddressContainer').css("display", "none");
+    // });
 
 
 });
@@ -414,4 +402,43 @@ function setupCompanyTable(tableID) {
                 .attr({ 'href': "/company/update/" + pk });
         }
     });
+}
+
+
+function deleteAddress(pk) {
+    addressPK = pk;
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
+            $.ajax({
+                url: `/ajax/address/delete/${addressPK}`,
+                type: 'POST',
+                dataType: 'json',
+                success: function () {
+                    Swal.fire(
+                        'Deleted!',
+                        'Item deleted!',
+                        'success'
+                    );
+                },
+                error: function (response) {
+                    Swal.fire(
+                        'Fail!',
+                        'Item NOT deleted!',
+                        'error'
+                    )
+                }
+            });
+
+        }
+    })
+
 }
