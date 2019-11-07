@@ -50,6 +50,29 @@ def update_company(request, company_pk):
     addresses = CompanyAddress.objects.filter(company=company_pk)
 
     if request.method == "POST" and request.is_ajax():
+        # Printing data from request.POST
+        # print(request.POST + "\n")
+        # for data in request.POST:
+        #     print(data + ": " + request.POST[data] + "\n")
+        #     result = data.split(".")
+        #     if len(result) > 2:
+        #         result[1] = int(result[1])
+        #         print(result[1])
+        #         print(type(result[1]))
+
+        # aqui não está funcionando. Devo criar um dicionário de dicionários.
+        # chave com id do address e item dicionário com os elementos
+        for data in request.POST:
+            input_name = data.split(".")
+            if (len(input_name) > 2) and (input_name[0] == 'address'):
+                input_name[1] = int(input_name[1])
+                # print(f"Address ID: {input_name[1]}")
+                # print(f'{input_name[2]}: {request.POST[data]} \n')
+                address = CompanyAddress.objects.get(pk=input_name[1])
+                if(getattr(address, input_name[2]) != request.POST[data]):
+                    setattr(address, input_name[2], request.POST[data])
+                    address.save()
+
         if company_form.is_valid():
             company_form.save()
             return JsonResponse({'message': 'Company updated successfully!', 'success': True}, status=200)
