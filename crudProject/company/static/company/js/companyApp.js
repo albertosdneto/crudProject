@@ -69,7 +69,7 @@ $(function () {
         if ($(this).attr('addressid') == 'null') {
             $(this).closest('.address-block').remove();
         }
-        else if (deleteAddress($(this).attr('addressid')) == true) {
+        else if (deleteAddress($(this).attr('addressid')) == 'true') {
             $(this).closest('.address-block').remove(); // erro aqui. tem que colocar dentro da função deleteAddress
         }
 
@@ -416,7 +416,8 @@ function deleteAddress(pk) {
                         'Item deleted!',
                         'success'
                     );
-                    console.log('true');
+                    let div_id = `#div_address_${addressPK}`;
+                    $(div_id).remove();
                 },
                 error: function (response) {
                     Swal.fire(
@@ -424,7 +425,7 @@ function deleteAddress(pk) {
                         'Item NOT deleted!',
                         'error'
                     );
-                    console.log('false');
+                    // console.log('false');
                 }
             });
 
