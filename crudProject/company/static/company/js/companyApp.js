@@ -69,24 +69,12 @@ $(function () {
         if ($(this).attr('addressid') == 'null') {
             $(this).closest('.address-block').remove();
         }
-        else {
-            deleteAddress($(this).attr('addressid'));
-            $(this).closest('.address-block').remove();
+        else if (deleteAddress($(this).attr('addressid')) == true) {
+            $(this).closest('.address-block').remove(); // erro aqui. tem que colocar dentro da função deleteAddress
         }
 
     });
     // Delete Address end
-
-
-    // // New Address for company
-    // $('#newAddressButton').click(function () {
-    //     $('#newAddressContainer').attr("class", "col-sm-12");
-    //     $('#newAddressContainer').css("display", "block");
-    // });
-    // $('#newAddressCancelButton').click(function () {
-    //     $('#newAddressContainer').css("display", "none");
-    // });
-
 
 });
 
@@ -428,13 +416,15 @@ function deleteAddress(pk) {
                         'Item deleted!',
                         'success'
                     );
+                    console.log('true');
                 },
                 error: function (response) {
                     Swal.fire(
                         'Fail!',
                         'Item NOT deleted!',
                         'error'
-                    )
+                    );
+                    console.log('false');
                 }
             });
 
