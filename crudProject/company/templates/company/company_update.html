@@ -34,7 +34,7 @@
 
             <form action="{% url 'company:update' company_pk=company.id %}" method="POST" id="companyFormUpdate">
                 {% csrf_token %}
-
+                <input type="hidden" name="new_address_counter" id="id_new_address_counter">
                 <div class="form-row form-row">
                     <div class="formColumn form-group col-md-6 mb-0">
                         <div id="div_id_name" class="form-group"> <label for="id_name" class=" requiredField">
@@ -262,7 +262,7 @@
 
 </div>
 
-<div id="address-block-model" class='card address-block' style="display: none;">
+<div id="address-block-model" class='card address-block address-block-model' style="display: none;">
     <div class='card-block'>
         <div class='form-row form-row'>
             <div class='formColumn form-group col-md-6 mb-0'>

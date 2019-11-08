@@ -50,15 +50,45 @@ def update_company(request, company_pk):
     addresses = CompanyAddress.objects.filter(company=company_pk)
 
     if request.method == "POST" and request.is_ajax():
-
+        print(request.POST)
+        new_address_counter = 0
         for data in request.POST:
             input_name = data.split(".")
-            if (len(input_name) > 2) and (input_name[0] == 'address'):
+
+            if(input_name[0] == 'new_address_counter'):
+                new_address_counter = int(request.POST[data])
+                if new_address_counter > 0:
+                    new_addresses = dict()
+                    for i in range(1, new_address_counter + 1):
+                        new_addresses[i] = dict()
+
+                # print(f'New addresses to save: {new_address_counter}')
+                # print(type(new_address_counter))
+
+            # Updates an existing address
+            elif (len(input_name) > 2) and (input_name[0] == 'address'):
                 input_name[1] = int(input_name[1])
                 address = CompanyAddress.objects.get(pk=input_name[1])
                 if(getattr(address, input_name[2]) != request.POST[data]):
                     setattr(address, input_name[2], request.POST[data])
                     address.save()
+
+            # Builds dictionary with the data of new addresses
+            elif (len(input_name) > 2) and (input_name[0] == 'new'):
+                input_name[1] = int(input_name[1])
+                new_addresses[input_name[1]
+                              ][input_name[2]] = request.POST[data]
+        # Saves New Addresses
+        if new_address_counter > 0:
+            for i in range(1, new_address_counter + 1):
+                address = CompanyAddress()
+                address.company = company
+
+                for data in new_addresses[i]:
+                    print(f'{i}: {data} = {new_addresses[i][data]}')
+                    setattr(address, data, new_addresses[i][data])
+
+                address.save()
 
         if company_form.is_valid():
             company_form.save()
