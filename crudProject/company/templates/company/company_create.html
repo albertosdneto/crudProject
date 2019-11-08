@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="card-block">
-            <form action="{% url 'company:create' %}" method="POST" id="companyForm">
+            <form method="POST" id="companyForm" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-row form-row">
                     <div class="formColumn form-group col-md-6 mb-0">

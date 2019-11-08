@@ -15,18 +15,20 @@ def company(request):
     return render(request, 'company/company_list.html')
 
 
-def getCompanyList(request):
-    if request.method == "GET" and request.is_ajax():
-        try:
-            companies = list(Company.objects.all().values())
-            data = dict()
-            data['data'] = companies
-        except:
-            return JsonResponse({"success": False}, status=400)
+def create_company(request):
+    form_company = CompanyForm(request.POST or None, request.FILES or None)
 
-        return JsonResponse(data, status=200)
+    if request.method == "POST" and request.is_ajax():
+        if form_company.is_valid():
+            form_company.save()
+            return JsonResponse({'message': 'Company created successfully', 'success': True}, status=200)
+        else:
+            return JsonResponse({'message': 'Error during form validation. Contact Support.', 'success': False}, status=200)
 
-    return JsonResponse({"success": False}, status=400)
+    context = {
+        'companyForm': form_company,
+    }
+    return render(request, 'company/company_create.html', context)
 
 
 def read_company(request, pk):
@@ -42,6 +44,9 @@ def read_company(request, pk):
     return render(request, 'company/company_details.html', context)
 
 
+# This View was built this way for educational purpose.
+# The idea here is to receive part of the data (addresses)
+# from user and save it without the use of Django Form.
 def update_company(request, company_pk):
     company = get_object_or_404(Company, pk=company_pk)
     company_form = CompanyForm(request.POST or None,
@@ -50,20 +55,19 @@ def update_company(request, company_pk):
     addresses = CompanyAddress.objects.filter(company=company_pk)
 
     if request.method == "POST" and request.is_ajax():
-        print(request.POST)
         new_address_counter = 0
+
         for data in request.POST:
             input_name = data.split(".")
 
-            if(input_name[0] == 'new_address_counter'):
+            # Make sure we only try to add addresses when necessary
+            # Then we create as much dictionaries as the number of new addresses to be created
+            if(input_name[0] == 'new_address_counter') and (request.POST[data] != '') and (request.POST[data] != '0'):
                 new_address_counter = int(request.POST[data])
                 if new_address_counter > 0:
                     new_addresses = dict()
                     for i in range(1, new_address_counter + 1):
                         new_addresses[i] = dict()
-
-                # print(f'New addresses to save: {new_address_counter}')
-                # print(type(new_address_counter))
 
             # Updates an existing address
             elif (len(input_name) > 2) and (input_name[0] == 'address'):
@@ -73,11 +77,12 @@ def update_company(request, company_pk):
                     setattr(address, input_name[2], request.POST[data])
                     address.save()
 
-            # Builds dictionary with the data of new addresses
+            # Populates dictionaries with the data of new addresses
             elif (len(input_name) > 2) and (input_name[0] == 'new'):
                 input_name[1] = int(input_name[1])
                 new_addresses[input_name[1]
                               ][input_name[2]] = request.POST[data]
+
         # Saves New Addresses
         if new_address_counter > 0:
             for i in range(1, new_address_counter + 1):
@@ -85,11 +90,11 @@ def update_company(request, company_pk):
                 address.company = company
 
                 for data in new_addresses[i]:
-                    print(f'{i}: {data} = {new_addresses[i][data]}')
                     setattr(address, data, new_addresses[i][data])
 
                 address.save()
 
+        # Saves Company related data
         if company_form.is_valid():
             company_form.save()
             return JsonResponse({'message': 'Company updated successfully!', 'success': True}, status=200)
@@ -104,31 +109,8 @@ def update_company(request, company_pk):
     return render(request, 'company/company_update.html', context)
 
 
-def newCompanytPage(request):
-    form_company = CompanyForm()
-
-    context = {
-        'companyForm': form_company,
-    }
-    return render(request, 'company/company_create.html', context)
-
-
-def postNewCompany(request):
-    data = dict()
-    if request.method == "POST" and request.is_ajax():
-        form_company = CompanyForm(request.POST, request.FILES)
-        form_company.save()
-        data['message'] = 'Company created successfully'
-        data['success'] = True
-        return JsonResponse(data, status=200)
-
-    data['message'] = 'Error creating company. Contact system administrator'
-    data['success'] = False
-    return JsonResponse(data, status=400)
-
-
 @csrf_protect
-def deleteCompany(request, pk):
+def delete_company(request, pk):
     if request.method == "POST" and request.is_ajax():
         data = dict()
         company = Company.objects.get(pk=pk)
@@ -140,27 +122,28 @@ def deleteCompany(request, pk):
         return JsonResponse(data)
 
 
-def newAddressPage(request):
-    form_address = CompanyAddressForm()
-    context = {
-        'company': company,
-        'addressForm': form_address
-    }
-    return render(request, 'company/address_create.html', context)
+def get_company_list(request):
+    if request.method == "GET" and request.is_ajax():
+        try:
+            companies = list(Company.objects.all().values())
+            data = dict()
+            data['data'] = companies
+        except:
+            return JsonResponse({"success": False}, status=400)
 
-
-def postNewAddress(request):
-    data = dict()
-    if request.method == "POST" and request.is_ajax():
-        form_address = CompanyAddressForm(request.POST)
-        form_address.save()
-        data['message'] = 'Company created successfully'
-        data['success'] = True
         return JsonResponse(data, status=200)
 
-    data['message'] = 'Error creating company. Contact system administrator'
-    data['success'] = False
-    return JsonResponse(data, status=400)
+    return JsonResponse({"success": False}, status=400)
+
+
+def reload_addresses(request, company_pk):
+    addresses = CompanyAddress.objects.filter(company=company_pk)
+
+    context = {
+        'addresses': addresses,
+    }
+
+    return render(request, 'company/_address_update.html', context)
 
 
 def delete_address(request, address_pk):

@@ -31,10 +31,9 @@
     <div class="card">
         <div class="card-block">
 
-
-            <form action="{% url 'company:update' company_pk=company.id %}" method="POST" id="companyFormUpdate">
+            <form method="POST" id="companyFormUpdate" enctype="multipart/form-data">
                 {% csrf_token %}
-                <input type="hidden" name="new_address_counter" id="id_new_address_counter">
+                <input type="hidden" name="new_address_counter" id="id_new_address_counter" companyID={{company.id}}>
                 <div class="form-row form-row">
                     <div class="formColumn form-group col-md-6 mb-0">
                         <div id="div_id_name" class="form-group"> <label for="id_name" class=" requiredField">
@@ -144,115 +143,13 @@
                                 id="id_logo"> </div>
                     </div>
                 </div>
-                <!-- Addresses start -->
                 <a class='create-address btn btn-info'>Add Address</a>
                 <hr>
-                {% for address in addresses %}
-                <div class="card address-block" id="div_address_{{address.id}}">
+                <div id='address_container'>
 
-                    <div class="card-block">
-                        <div class="form-row form-row">
-                            <div class="formColumn form-group col-md-6 mb-0">
-                                <div id="div_id_addressType" class="form-group">
-                                    <label for="id_addressType_{{address.id}}" class=" requiredField">
-                                        AddressType<span class="asteriskField">*</span>
-                                    </label>
-                                    <div class="">
-                                        <input type="text" name="address.{{address.id}}.addressType" maxlength="50"
-                                            class="textinput textInput form-control" required
-                                            id="id_addressType_{{address.id}}" value="{{address.addressType}}">
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="form-row form-row">
-                            <div class="formColumn form-group col-md-6 mb-0">
-                                <div id="div_id_line1" class="form-group">
-                                    <label for="id_line1_{{address.id}}" class=" requiredField">
-                                        Line1<span class="asteriskField">*</span>
-                                    </label>
-                                    <div class="">
-                                        <input type="text" name="address.{{address.id}}.line1" maxlength="200"
-                                            class="textinput textInput form-control" required
-                                            id="id_line1_{{address.id}}" value="{{address.line1}}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="formColumn form-group col-md-6 mb-0">
-                                <div id="div_id_line2" class="form-group">
-                                    <label for="id_line2_{{address.id}}" class=" requiredField">
-                                        Line2<span class="asteriskField">*</span>
-                                    </label>
-                                    <div class="">
-                                        <input type="text" name="address.{{address.id}}.line2" maxlength="200"
-                                            class="textinput textInput form-control" required
-                                            id="id_line2_{{address.id}}" value="{{address.line2}}">
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="form-row form-row">
-                            <div class="formColumn form-group col-md-2 mb-0">
-                                <div id="div_id_zipCode" class="form-group">
-                                    <label for="id_zipCode_{{address.id}}" class=" requiredField">
-                                        ZipCode<span class="asteriskField">*</span>
-                                    </label>
-                                    <div class="">
-                                        <input type="text" name="address.{{address.id}}.zipCode" maxlength="50"
-                                            class="textinput textInput form-control" required
-                                            id="id_zipCode_{{address.id}}" value="{{address.zipCode}}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="formColumn form-group col-md-2 mb-0">
-                                <div id="div_id_city" class="form-group">
-                                    <label for="id_city_{{address.id}}" class=" requiredField">
-                                        City<span class="asteriskField">*</span>
-                                    </label>
-                                    <div class="">
-                                        <input type="text" name="address.{{address.id}}.city" maxlength="100"
-                                            class="textinput textInput form-control" required
-                                            id="id_city_{{address.id}}" value="{{address.city}}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="formColumn form-group col-md-4 mb-0">
-                                <div id="div_id_state" class="form-group">
-                                    <label for="id_state_{{address.id}}" class=" requiredField">
-                                        State<span class="asteriskField">*</span>
-                                    </label>
-                                    <div class="">
-                                        <input type="text" name="address.{{address.id}}.state" maxlength="100"
-                                            class="textinput textInput form-control" required
-                                            id="id_state_{{address.id}}" value="{{address.state}}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="formColumn form-group col-md-4 mb-0">
-                                <div id="div_id_country" class="form-group">
-                                    <label for="id_country_{{address.id}}" class=" requiredField">
-                                        Country<span class="asteriskField">*</span>
-                                    </label>
-                                    <div class="">
-                                        <input type="text" name="address.{{address.id}}.country" maxlength="100"
-                                            class="textinput textInput form-control" required
-                                            id="id_country_{{address.id}}" value="{{address.country}}">
-                                    </div>
-                                </div>
-                            </div>
-                            <a class='create-address btn btn-info'>Add Another</a>
-                            <a class='delete-address btn btn-danger' addressid='{{ address.id }}'>Remove This</a>
-                        </div>
-                    </div>
-                    <hr>
+                    {% include 'company/_address_update.html' %}
+                    <hr class="address_end">
                 </div>
-
-                {% endfor %}
-
-                <!-- Addresses End -->
-
                 <input type="submit" name="submit" value="Submit" class="btn btn-primary" id="submit-id-submit" />
 
             </form>

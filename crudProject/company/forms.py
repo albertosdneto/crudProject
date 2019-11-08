@@ -18,7 +18,7 @@ class CompanyForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'placeholder': 'Street and Number'})
     )
     line2 = forms.CharField(
-        label=' ',
+        label='Apartment, floor, etc.',
         widget=forms.TextInput(
             attrs={'placeholder': 'Apartment, studio, or floor'})
     )

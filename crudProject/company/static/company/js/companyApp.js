@@ -1,89 +1,140 @@
 $(function () {
 
-    // Company Creation Start 
-    // Submit form for Company Creation
+    // ************ Company Creation Start ************ 
     $("#companyForm").submit(function (e) {
         // prevent from normal form behaviour
         e.preventDefault();
 
         $.blockUI();
-        // serialize the form data  
-        let serializedData = $(this).serialize();
-        createCompany(serializedData, '#companyForm', '#messageBox');
+
+        $form = $(this)
+        var formData = new FormData(this);
+        if (validateCompanyForm("#companyForm") == true) {
+            $.ajax({
+                type: 'POST',
+                url: window.location.pathname,
+                data: formData,
+                success: function (response) {
+                    //reset the form after successful submit
+                    $("#companyForm")[0].reset();
+                    $('#messageBox').attr("class", "alert alert-success col-md-2");
+                    $('#messageBox').find('span').html("<strong>Success!</strong> " + response.message);
+                    $('#messageBox').css("display", "block");
+                },
+                error: function (response) {
+                    $('#messageBox').attr("class", "alert alert-danger col-md-2");
+                    $('#messageBox').find('span').html("<strong>Error!</strong> " + response.message);
+                    $('#messageBox').css("display", "block");
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+
+        }
         $.unblockUI();
     });
-    // Company Creation End
+    // ************ Company Creation End ************ 
 
 
-    // Company Update - Start
-    // Options for company update
-    let options = {
-        success: function (response) {
-            $('#messageBox').attr("class", "alert alert-success col-md-6");
-            $('#messageBox').find('span').html("<strong>Success!</strong><br>" + response.message);
-            $('#messageBox').css("display", "block");
-        },
-        error: function (response) {
-            $('#messageBox').attr("class", "alert alert-danger col-md-6");
-            $('#messageBox').find('span').html("<strong>Error! </strong> Contact System support.<br>" + response.message);
-            $('#messageBox').css("display", "block");
-        },
-    };
-    // For submition via ajax usgin Plugin <http://jquery.malsup.com/form/>
-    $('#companyFormUpdate').ajaxForm(options);
+    // ************ Company Update - Start ************ 
+    $("#companyFormUpdate").submit(function (e) {
+        // prevent from normal form behaviour
+        e.preventDefault();
+
+        $.blockUI();
+
+        $form = $(this)
+        var formData = new FormData(this);
+
+        if (validateCompanyForm('#companyFormUpdate') == true) {
+            $.ajax({
+                type: 'POST',
+                url: window.location.pathname,
+                data: formData,
+                success: function (response) {
+                    $('#messageBox').attr("class", "alert alert-success col-md-6");
+                    $('#messageBox').find('span').html("<strong>Success!</strong> " + response.message);
+                    $('#messageBox').css("display", "block");
+                    countNewAddress = 0;
+                    $('#id_new_address_counter').attr('value', countNewAddress);
+                    reloadAddresses($('#id_new_address_counter').attr('companyID'));
+                },
+                error: function (response) {
+                    $('#messageBox').attr("class", "alert alert-danger col-md-6");
+                    $('#messageBox').find('span').html("<strong>Error!</strong> " + response.message);
+                    $('#messageBox').css("display", "block");
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+
+        }
+        $.unblockUI();
+    });
+
 
     // Create New Address Inputs start
     var countNewAddress = 0;
-    $('a.create-address').click(function () {
+    $('#companyFormUpdate').on('click', 'a.create-address', function () {
         countNewAddress += 1;
+
         $('#address-block-model')
             .clone(true)
-            .insertBefore('#submit-id-submit')
+            .insertBefore('hr.address_end:last')
             .css('display', 'block')
-            .attr('id', 'new_' + countNewAddress)
-        $('#id_new_address_counter').attr('value', countNewAddress)
+            .attr('id', 'new_' + countNewAddress);
+
+        $('#id_new_address_counter').attr('value', countNewAddress);
+
         $('#new_' + countNewAddress)
             .find('input#id_addressType')
-            .attr('name', 'new.' + countNewAddress + '.addressType');
+            .attr({ name: 'new.' + countNewAddress + '.addressType', required: 'true' });
+
         $('#new_' + countNewAddress)
             .find('input#id_line1')
-            .attr('name', 'new.' + countNewAddress + '.line1');
+            .attr({ name: 'new.' + countNewAddress + '.line1', required: 'true' });
+
         $('#new_' + countNewAddress)
             .find('input#id_line2')
-            .attr('name', 'new.' + countNewAddress + '.line2');
+            .attr({ name: 'new.' + countNewAddress + '.line2', required: 'true' });
+
         $('#new_' + countNewAddress)
             .find('input#id_zipCode')
-            .attr('name', 'new.' + countNewAddress + '.zipCode');
+            .attr({ name: 'new.' + countNewAddress + '.zipCode', required: 'true' });
+
         $('#new_' + countNewAddress)
             .find('input#id_city')
-            .attr('name', 'new.' + countNewAddress + '.city');
+            .attr({ name: 'new.' + countNewAddress + '.city', required: 'true' });
+
         $('#new_' + countNewAddress)
             .find('input#id_state')
-            .attr('name', 'new.' + countNewAddress + '.state');
+            .attr({ name: 'new.' + countNewAddress + '.state', required: 'true' });
+
         $('#new_' + countNewAddress)
             .find('input#id_country')
-            .attr('name', 'new.' + countNewAddress + '.country');
+            .attr({ name: 'new.' + countNewAddress + '.country', required: 'true' });
     });
-    // Create Address end
+    // Create New Address Input end
 
-    // Delete Address start
-
-    $('a.delete-address').click(function () {
+    // Delete Address Start
+    $('#companyFormUpdate div').on('click', 'a.delete-address', function () {
         if ($(this).attr('addressid') == 'null') {
             $(this).closest('.address-block').remove();
             countNewAddress -= 1;
             $('#id_new_address_counter').attr('value', countNewAddress)
         }
-        else if (deleteAddress($(this).attr('addressid')) == 'true') {
-            $(this).closest('.address-block').remove(); // erro aqui. tem que colocar dentro da função deleteAddress
+        else {
+            deleteAddress($(this).attr('addressid'));
         }
-
     });
     // Delete Address end
-    // Company Update - End
+
+    // ************ Company Update - End ************ 
 
 
-    // List of Companies - Start
+    // ************ List of Companies - Start ************ 
     setupCompanyTable('#myTable');
 
     // Reload table start
@@ -100,9 +151,9 @@ $(function () {
         deleteCompany(parseInt(pk, 10), '#myTable');
     });
     // Delete Company end
-    // List of Companies - End
+    // ************ List of Companies - End ************ 
 
-    // Address Creation - Start
+    // ************ Address Creation - Start ************ 
     $("#companyAddressForm").submit(function (e) {
         // prevent from normal form behaviour
         e.preventDefault();
@@ -113,12 +164,15 @@ $(function () {
         createAddress(serializedData, '#companyAddressForm', '#messageBox');
         $.unblockUI();
     });
-    // Address Creation - End
+    // ************ Address Creation - End ************ 
 
 
 });
 
-// Validate form for company creation
+
+// Company Related Functions - Start
+
+// Validate form for company creation or update
 function validateCompanyForm(formID) {
     if ($.trim($('#id_name').val()) == '') {
         alert("Fill in the Name of the Company!");
@@ -186,100 +240,6 @@ function validateCompanyForm(formID) {
 
 }
 
-function createCompany(serializedData, formID, messageBoxID) {
-    if (validateCompanyForm(formID) == true) {
-        $.ajax({
-            type: 'POST',
-            url: "/ajax/post_new_company/",
-            data: serializedData,
-            success: function (response) {
-                //reset the form after successful submit
-                $(formID)[0].reset();
-                $(messageBoxID).attr("class", "alert alert-success col-md-2");
-                $(messageBoxID).find('span').html("<strong>Success!</strong> Company Created");
-                $(messageBoxID).css("display", "block");
-            },
-            error: function (response) {
-                $(messageBoxID).attr("class", "alert alert-danger col-md-2");
-                $(messageBoxID).find('span').html("<strong>Error!</strong> Contact system support.");
-                $(messageBoxID).css("display", "block");
-            }
-        });
-
-    }
-
-}
-
-
-function createAddress(serializedData, formID, messageBoxID) {
-    if (validateAddressForm(formID) == true) {
-        $.ajax({
-            type: 'POST',
-            url: "/ajax/post_new_address/",
-            data: serializedData,
-            success: function (response) {
-                //reset the form after successful submit
-                // $(formID)[0].reset();
-                $(messageBoxID).attr("class", "alert alert-success col-md-2");
-                $(messageBoxID).find('span').html("<strong>Success!</strong>" + response.data.message);
-                $(messageBoxID).css("display", "block");
-            },
-            error: function (response) {
-                $(messageBoxID).attr("class", "alert alert-danger col-md-2");
-                $(messageBoxID).find('span').html("<strong>Error!</strong> Contact system support.");
-                $(messageBoxID).css("display", "block");
-            }
-        });
-
-    }
-
-}
-
-// Validate form for company creation
-function validateAddressForm(formID) {
-    if ($.trim($('#id_addressType').val()) == '') {
-        alert("Fill in the Address Type!");
-        $('#id_addressType').focus();
-        return false;
-    }
-
-    if ($.trim($('#id_line1').val()) == '') {
-        alert("Fill in Address Info");
-        $('#id_line1').focus();
-        return false;
-    }
-
-    if ($.trim($('#id_line2').val()) == '') {
-        alert("Fill in Address Info");
-        $('#id_line2').focus();
-        return false;
-    }
-    if ($.trim($('#id_zipCode').val()) == '') {
-        alert("Fill in Zip Code");
-        $('#id_zipCode').focus();
-        return false;
-    }
-
-    if ($.trim($('#id_city').val()) == '') {
-        alert("Fill in City");
-        $('#id_city').focus();
-        return false;
-    }
-
-    if ($.trim($('#id_state').val()) == '') {
-        alert("Fill in State or Province");
-        $('#id_state').focus();
-        return false;
-    }
-
-    if ($.trim($('#id_country').val()) == '') {
-        alert("Fill in Country");
-        $('#id_country').focus();
-        return false;
-    }
-    return true;
-
-}
 
 // CSRF token setup start
 // This configuration is necessary to make sure ajax requests
@@ -400,16 +360,15 @@ function setupCompanyTable(tableID) {
         createdRow: function (row, data, dataIndex) {
             pk = $(row).closest('tr').attr('id').substr(3);
             $(row).find('a:eq(0)').attr({ 'href': "/company/details/" + pk });
-
-            // .attr({ 'href': "/company/details/" + pk });
-
             $(row).find('a:eq(1)')
                 .attr({ 'href': "/company/update/" + pk });
         }
     });
 }
+// Company Related Functions - End
 
 
+// Address Related Functions - Start
 function deleteAddress(pk) {
     addressPK = pk;
 
@@ -450,26 +409,15 @@ function deleteAddress(pk) {
 
 }
 
-// function updateCompany(serializedData, formID, messageBoxID) {
-//     if (validateCompanyForm(formID) == true) {
-//         $.ajax({
-//             type: 'POST',
-//             url: '/ajax/company/post_update/',
-//             data: serializedData,
-//             success: function (response) {
-//                 //reset the form after successful submit
-//                 $(formID)[0].reset();
-//                 $(messageBoxID).attr("class", "alert alert-success col-md-2");
-//                 $(messageBoxID).find('span').html("<strong>Success!</strong> Company updated");
-//                 $(messageBoxID).css("display", "block");
-//             },
-//             error: function (response) {
-//                 $(messageBoxID).attr("class", "alert alert-danger col-md-2");
-//                 $(messageBoxID).find('span').html("<strong>Error!</strong> Contact system support.");
-//                 $(messageBoxID).css("display", "block");
-//             }
-//         });
 
-//     }
+function reloadAddresses(companyID) {
+    $.ajax({
+        type: 'GET',
+        url: `/company/address/reload/${companyID}`,
+        success: function (data) {
+            $('#address_container').html(data);
+        }
+    });
+}
 
-// }
+// Address Related Functions - End
