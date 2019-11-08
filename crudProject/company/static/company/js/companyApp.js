@@ -1,5 +1,6 @@
 $(function () {
 
+    // Company Creation Start 
     // Submit form for Company Creation
     $("#companyForm").submit(function (e) {
         // prevent from normal form behaviour
@@ -11,7 +12,10 @@ $(function () {
         createCompany(serializedData, '#companyForm', '#messageBox');
         $.unblockUI();
     });
+    // Company Creation End
 
+
+    // Company Update - Start
     // Options for company update
     let options = {
         success: function (response) {
@@ -25,9 +29,61 @@ $(function () {
             $('#messageBox').css("display", "block");
         },
     };
+    // For submition via ajax usgin Plugin <http://jquery.malsup.com/form/>
     $('#companyFormUpdate').ajaxForm(options);
 
+    // Create New Address Inputs start
+    var countNewAddress = 0;
+    $('a.create-address').click(function () {
+        countNewAddress += 1;
+        $('#address-block-model')
+            .clone(true)
+            .insertBefore('#submit-id-submit')
+            .css('display', 'block')
+            .attr('id', 'new_' + countNewAddress)
+        $('#id_new_address_counter').attr('value', countNewAddress)
+        $('#new_' + countNewAddress)
+            .find('input#id_addressType')
+            .attr('name', 'new.' + countNewAddress + '.addressType');
+        $('#new_' + countNewAddress)
+            .find('input#id_line1')
+            .attr('name', 'new.' + countNewAddress + '.line1');
+        $('#new_' + countNewAddress)
+            .find('input#id_line2')
+            .attr('name', 'new.' + countNewAddress + '.line2');
+        $('#new_' + countNewAddress)
+            .find('input#id_zipCode')
+            .attr('name', 'new.' + countNewAddress + '.zipCode');
+        $('#new_' + countNewAddress)
+            .find('input#id_city')
+            .attr('name', 'new.' + countNewAddress + '.city');
+        $('#new_' + countNewAddress)
+            .find('input#id_state')
+            .attr('name', 'new.' + countNewAddress + '.state');
+        $('#new_' + countNewAddress)
+            .find('input#id_country')
+            .attr('name', 'new.' + countNewAddress + '.country');
+    });
+    // Create Address end
 
+    // Delete Address start
+
+    $('a.delete-address').click(function () {
+        if ($(this).attr('addressid') == 'null') {
+            $(this).closest('.address-block').remove();
+            countNewAddress -= 1;
+            $('#id_new_address_counter').attr('value', countNewAddress)
+        }
+        else if (deleteAddress($(this).attr('addressid')) == 'true') {
+            $(this).closest('.address-block').remove(); // erro aqui. tem que colocar dentro da função deleteAddress
+        }
+
+    });
+    // Delete Address end
+    // Company Update - End
+
+
+    // List of Companies - Start
     setupCompanyTable('#myTable');
 
     // Reload table start
@@ -38,13 +94,15 @@ $(function () {
     });
     // Reload table end
 
-    // Delete Item start
+    // Delete Company start
     $('#myTable tbody').on('click', 'button.delete-row', function () {
         pk = $(this).closest('tr').attr('id').substr(3);
         deleteCompany(parseInt(pk, 10), '#myTable');
     });
-    // Delete Item end
+    // Delete Company end
+    // List of Companies - End
 
+    // Address Creation - Start
     $("#companyAddressForm").submit(function (e) {
         // prevent from normal form behaviour
         e.preventDefault();
@@ -55,26 +113,8 @@ $(function () {
         createAddress(serializedData, '#companyAddressForm', '#messageBox');
         $.unblockUI();
     });
+    // Address Creation - End
 
-    // Create New Address Inputs start
-
-    $('a.create-address').click(function () {
-        $('#address-block-model').clone(true).insertBefore('#submit-id-submit').css('display', 'block');
-    });
-    // Create Address end
-
-    // Delete Address start
-
-    $('a.delete-address').click(function () {
-        if ($(this).attr('addressid') == 'null') {
-            $(this).closest('.address-block').remove();
-        }
-        else if (deleteAddress($(this).attr('addressid')) == 'true') {
-            $(this).closest('.address-block').remove(); // erro aqui. tem que colocar dentro da função deleteAddress
-        }
-
-    });
-    // Delete Address end
 
 });
 
@@ -170,29 +210,6 @@ function createCompany(serializedData, formID, messageBoxID) {
 
 }
 
-function updateCompany(serializedData, formID, messageBoxID) {
-    if (validateCompanyForm(formID) == true) {
-        $.ajax({
-            type: 'POST',
-            url: '/ajax/company/post_update/',
-            data: serializedData,
-            success: function (response) {
-                //reset the form after successful submit
-                $(formID)[0].reset();
-                $(messageBoxID).attr("class", "alert alert-success col-md-2");
-                $(messageBoxID).find('span').html("<strong>Success!</strong> Company updated");
-                $(messageBoxID).css("display", "block");
-            },
-            error: function (response) {
-                $(messageBoxID).attr("class", "alert alert-danger col-md-2");
-                $(messageBoxID).find('span').html("<strong>Error!</strong> Contact system support.");
-                $(messageBoxID).css("display", "block");
-            }
-        });
-
-    }
-
-}
 
 function createAddress(serializedData, formID, messageBoxID) {
     if (validateAddressForm(formID) == true) {
@@ -425,7 +442,6 @@ function deleteAddress(pk) {
                         'Item NOT deleted!',
                         'error'
                     );
-                    // console.log('false');
                 }
             });
 
@@ -433,3 +449,27 @@ function deleteAddress(pk) {
     })
 
 }
+
+// function updateCompany(serializedData, formID, messageBoxID) {
+//     if (validateCompanyForm(formID) == true) {
+//         $.ajax({
+//             type: 'POST',
+//             url: '/ajax/company/post_update/',
+//             data: serializedData,
+//             success: function (response) {
+//                 //reset the form after successful submit
+//                 $(formID)[0].reset();
+//                 $(messageBoxID).attr("class", "alert alert-success col-md-2");
+//                 $(messageBoxID).find('span').html("<strong>Success!</strong> Company updated");
+//                 $(messageBoxID).css("display", "block");
+//             },
+//             error: function (response) {
+//                 $(messageBoxID).attr("class", "alert alert-danger col-md-2");
+//                 $(messageBoxID).find('span').html("<strong>Error!</strong> Contact system support.");
+//                 $(messageBoxID).css("display", "block");
+//             }
+//         });
+
+//     }
+
+// }
