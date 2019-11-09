@@ -340,6 +340,9 @@ function reloadCompanyTable(tableID) {
 
 // Setup Company Table start
 function setupCompanyTable(tableID) {
+    let buttonOpen = "<a target='_blank'><button class='open-row btn btn-info'><span class='pcoded-micon'><i class='ti-new-window'></i></span></button></a>";
+    let buttonEdit = "<a target='_blank'><button class='edit-row btn btn-warning'><span class='pcoded-micon'><i class='ti-pencil'></i></span></button></a>";
+    let buttonDelete = "<button class='delete-row btn btn-danger'><span class='pcoded-micon'><i class='ti-trash'></i></span></button>";
     $(tableID).DataTable({
         "ordering": true,
         "ajax": "/ajax/get_company_list/",
@@ -354,7 +357,7 @@ function setupCompanyTable(tableID) {
         "columnDefs": [{
             "targets": -1,
             "data": null,
-            "defaultContent": "<a><button class='open-row btn btn-info'>Open</button></a><a><button class='edit-row btn btn-warning'>Edit</button></a><button class='delete-row btn btn-danger'>Delete</button>",
+            "defaultContent": `${buttonOpen}${buttonEdit}${buttonDelete}`,
         }],
 
         createdRow: function (row, data, dataIndex) {
