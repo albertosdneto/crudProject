@@ -24,12 +24,10 @@ conda activate crudEnv
 ```
 - Clone the repository:
 ```shell
-git clone https://github.com/albertosdneto/django_crud.git
+git clone https://github.com/albertosdneto/crudProject.git
 ```
 - Go to the crudProject folder and install the requirements:
 ```shell
-cd django_crud
-
 cd crudProject
 
 pip install -r requirements.txt
