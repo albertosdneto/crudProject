@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <style>
+        td,
+        th {
+            border: 1px solid #111;
+            padding: 6px;
+        }
+
+        th {
+            font-weight: 700;
+            min-width: 140px;
+            height: 40px;
+            text-align: center;
+        }
+
+        #row01 {
+            background-color: rgb(127, 255, 212);
+        }
+
+        #row02 {
+            background-color: rgb(233, 150, 122);
+        }
+
+        #row03 {
+            background-color: rgb(222, 184, 135);
+        }
+
+        #row04 {
+            background-color: rgb(134, 202, 204);
+        }
+    </style>
+    <title>jQuery Plugin to Sort Table Items</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="tableSortPlugin.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('table').sortTable({
+                // Choose between 'top' or 'bottom' (default: 'top')
+                searchInputPosition: 'bottom',
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+    <h2>Sorting works at this table.</h2>
+
+    <table id="sort_this_table">
+
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Age</th>
+            <th>Start Date</th>
+            <th>Salary</th>
+        </tr>
+        <tr id="row01">
+            <td>Chicogenes</td>
+            <td>Java Dev</td>
+            <td>Campo Maior</td>
+            <td>48</td>
+            <td>2004/07/06</td>
+            <td>8000</td>
+        </tr>
+        <tr id="row02">
+            <td>Jack</td>
+            <td>Flask Dev</td>
+            <td>San Francisco</td>
+            <td>47</td>
+            <td>2001/12/31</td>
+            <td>10000</td>
+        </tr>
+        <tr id="row03">
+            <td>Madeira</td>
+            <td>JS Dev</td>
+            <td>Teresina</td>
+            <td>46</td>
+            <td>2004/06/13</td>
+            <td>8000</td>
+        </tr>
+        <tr id="row04">
+            <td>Alberto</td>
+            <td>Django Dev</td>
+            <td>Parnaiba</td>
+            <td>45</td>
+            <td>2019/09/09</td>
+            <td>7000</td>
+        </tr>
+    </table>
+    <br><br>
+
+
+    <h2>The table below will not be affected </h2>
+
+    <table id="do_not_sort_this_table">
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Age</th>
+            <th>Start Date</th>
+            <th>Salary</th>
+        </tr>
+        <tr id="row01">
+            <td>Chicogenes</td>
+            <td>Java Dev</td>
+            <td>Campo Maior</td>
+            <td>48</td>
+            <td>2004/07/06</td>
+            <td>8000</td>
+        </tr>
+        <tr id="row02">
+            <td>Jack</td>
+            <td>Flask Dev</td>
+            <td>San Francisco</td>
+            <td>47</td>
+            <td>2001/12/31</td>
+            <td>10000</td>
+        </tr>
+        <tr id="row03">
+            <td>Madeira</td>
+            <td>JS Dev</td>
+            <td>Teresina</td>
+            <td>47</td>
+            <td>2004/06/13</td>
+            <td>8000</td>
+        </tr>
+        <tr id="row04">
+            <td>Alberto</td>
+            <td>Django Dev</td>
+            <td>Parnaiba</td>
+            <td>45</td>
+            <td>2019/09/09</td>
+            <td>7000</td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
