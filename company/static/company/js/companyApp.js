@@ -136,6 +136,10 @@ $(function () {
 
     // ************ List of Companies - Start ************ 
     setupCompanyTable('#myTable');
+    $('#myTable').sortTable({
+        // Choose between 'top' or 'bottom' (default: 'top')
+        searchInputPosition: 'top',
+    });
 
     // Reload table start
     $('.reloadButton').click(function () {
@@ -345,6 +349,7 @@ function setupCompanyTable(tableID) {
     let buttonDelete = "<button class='delete-row btn btn-danger'><span class='pcoded-micon'><i class='ti-trash'></i></span></button>";
     $(tableID).DataTable({
         "ordering": true,
+        "searching": false,
         "ajax": "/ajax/get_company_list/",
         rowId: function (a) {
             return 'pk_' + a.id;
