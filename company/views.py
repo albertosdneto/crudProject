@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.forms import inlineformset_factory
 from django.http import JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
@@ -125,15 +126,31 @@ def delete_company(request, pk):
 def get_company_list(request):
     if request.method == "GET" and request.is_ajax():
         try:
-            companies = list(Company.objects.all().values())
+            if(request.GET.get('searchText') != ''):
+                companies = list(
+                    Company.objects.filter(
+                        name__icontains=request.GET.get('searchText')
+                    ).values()
+                )
+            else:
+                companies = list(Company.objects.all().values())
+
+            paginator = Paginator(companies, request.GET.get('length'))
+            page = (int(request.GET.get('start')) /
+                    int(request.GET.get('length'))) + 1
             data = dict()
-            data['data'] = companies
+            data['draw'] = int(request.GET.get('draw'))
+            data['recordsTotal'] = paginator.count
+            data['recordsFiltered'] = paginator.count
+
+            data['data'] = list(paginator.get_page(page))
+            print(request.GET.get('searchText'))
         except:
-            return JsonResponse({"success": False}, status=400)
+            return JsonResponse({"success": False, "message": "Error retrieving data"}, status=400)
 
         return JsonResponse(data, status=200)
 
-    return JsonResponse({"success": False}, status=400)
+    return JsonResponse({'message': 'Error not GET method!', 'success': False}, status=400)
 
 
 def reload_addresses(request, company_pk):

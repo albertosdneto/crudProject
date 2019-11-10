@@ -20,6 +20,13 @@
         <div class="card-block">
             <p class="text-muted m-b-10">Here you can find iformation about the companies recorded in our catalog.</p>
         </div>
+        <div id="messageBox" style="display: none;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <i class="icofont icofont-close-line-circled"></i>
+            </button>
+
+            <span></span>
+        </div>
     </div>
 
 </div>
@@ -31,22 +38,23 @@
     <div class="card icon-btn">
         <div class="card-header">
             <h5>List of Companies</h5>
-            <button class="btn btn-success reloadButton"><span class="pcoded-micon"><i class="ti-reload"></i></span></button>
+            <button class="btn btn-success reloadButton"><span class="pcoded-micon"><i
+                        class="ti-reload"></i></span></button>
         </div>
         <div class="card-block ">
-
+            <input type="hidden" id="csrf_token" value="{{csrf_token}}" />
             <table id="myTable" class="display" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Tax ID Number</th>
+                        <th class="sortable">Name</th>
+                        <th class="sortable">Tax ID Number</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>Name</th>
-                        <th>Tax ID Number</th>
+                        <th class="sortable">Name</th>
+                        <th class="sortable">Tax ID Number</th>
                         <th>Actions</th>
                     </tr>
                 </tfoot>
@@ -66,5 +74,6 @@
 <script type="text/javascript" charset="utf8" src="{% static 'DataTables/datatables.js' %}"></script>
 <script src="{% static 'company/js/companyApp.js' %}"></script>
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
 {% endblock scripts %}
