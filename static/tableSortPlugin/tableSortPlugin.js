@@ -18,9 +18,9 @@
 
         // Sets the input and shows it
         if (settings.searchInputPosition == 'bottom') {
-            $(this).after("<input type='text' class='search_" + settings.searchInputPosition + "' placeholder='Search'>")
+            $(this).after("<form id='searchCompany' methor='POST'><input type='text' class='search_" + settings.searchInputPosition + "' placeholder='Search data on screen'><input type='submit' value='Search all database' class='search-btn btn btn-primary btn-outline-primary'></form>")
         } else {
-            $(this).before("<br><br><input type='text' class='search_" + settings.searchInputPosition + "' placeholder='Search'>")
+            $(this).before("<br><br><form id='searchCompany' methor='POST'><input type='text' class='search_" + settings.searchInputPosition + "' placeholder='Search data on screen'><input type='submit' value='Search all database' class='search-btn btn btn-primary btn-outline-primary'></form>")
         }
 
         $(this).parents('div').find('.search_' + settings.searchInputPosition).show()
@@ -38,14 +38,15 @@
             });
         });
 
+
         // Sets the span that will show whether the items are order ascending or descending
-        $(this).find('th').append("<br><span class='order_by'></strong>")
+        // $(this).find('th').append("<br><span class='order_by'></strong>")
 
         // Whenever a th is clicked the whole column gets ordered
-        $(this).find('th').click(function () {
+        $(this).find('th.sortable').click(function () {
             let table = $(this).parents('table').eq(0)
 
-            let rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+            let rows = table.find('tbody tr').toArray().sort(comparer($(this).index()))
             this.asc = !this.asc
 
             if (!this.asc) {
@@ -53,23 +54,23 @@
             }
             for (let i = 0; i < rows.length; i++) {
                 table.append(rows[i])
-                table.find('th').find('.order_by').text('')
+                // table.find('th').find('.order_by').text('')
             }
 
             // Changes the text according to the ordenation
-            if (this.asc) {
-                $(this).find('.order_by').text('(Asc)')
-            } else if (!this.asc) {
-                $(this).find('.order_by').text('(Desc)')
-            } else {
-                $(this).find('.order_by').text('')
-            }
+            // if (this.asc) {
+            //     $(this).find('.order_by').text('(Asc)')
+            // } else if (!this.asc) {
+            //     $(this).find('.order_by').text('(Desc)')
+            // } else {
+            //     $(this).find('.order_by').text('')
+            // }
 
             return table;
         })
 
-        // Function passed to the sort() method. It makes sure the values are treated accoding to 
-        // there nature (numeric or not numeric)
+        // Function passed to the sort() method.It makes sure the values are treated accoding to
+        // there nature(numeric or not numeric)
         function comparer(index) {
 
             return function (a, b) {

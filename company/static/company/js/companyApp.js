@@ -141,10 +141,11 @@ $(function () {
         searchInputPosition: 'top',
     });
 
+
     // Reload table start
     $('.reloadButton').click(function () {
         $.blockUI();
-        reloadCompanyTable('#myTable');
+        $('#myTable').DataTable().ajax.reload();
         $.unblockUI();
     });
     // Reload table end
@@ -155,6 +156,19 @@ $(function () {
         deleteCompany(parseInt(pk, 10), '#myTable');
     });
     // Delete Company end
+
+    // Searchs entire database on server
+    $('#searchCompany').submit(function (e) {
+        e.preventDefault();
+
+        $.blockUI({ message: '<h1>Searching...</h1>' });
+
+        $('#myTable').DataTable().ajax.reload(null, true);
+
+        $.unblockUI();
+    });
+
+    // });
     // ************ List of Companies - End ************ 
 
     // ************ Address Creation - Start ************ 
@@ -323,34 +337,44 @@ function deleteCompany(pk, tableID) {
 
 // Table related start
 
-// Reloads table data at every click on 'Reload'
-function reloadCompanyTable(tableID) {
-    $.ajax({
-
-        type: "GET",
-        url: "/ajax/get_company_list/",
-        contentType: "application/json; charset=utf-8",
-
-    }).done(function (response) {
-
-        $(tableID).DataTable().ajax.reload();
-
-    }).fail(function (xhr, result, status) {
-
-        console.log('Error retrieving content. Contact system admin.');
-
-    });
+// Gets the value of the search input so it can be used when reloading dataTable
+// This function will be called when the table is created and every time the table is reloaded.
+function getSearchText() {
+    try {
+        let searchText = $('#searchCompany').find('input:first').val().toLowerCase();
+        return searchText;
+    }
+    catch {
+        return '';
+    }
 }
 
-// Setup Company Table start
 function setupCompanyTable(tableID) {
+
+
     let buttonOpen = "<a target='_blank'><button class='open-row btn btn-info'><span class='pcoded-micon'><i class='ti-new-window'></i></span></button></a>";
     let buttonEdit = "<a target='_blank'><button class='edit-row btn btn-warning'><span class='pcoded-micon'><i class='ti-pencil'></i></span></button></a>";
     let buttonDelete = "<button class='delete-row btn btn-danger'><span class='pcoded-micon'><i class='ti-trash'></i></span></button>";
     $(tableID).DataTable({
-        "ordering": true,
+        "ordering": false,
         "searching": false,
-        "ajax": "/ajax/get_company_list/",
+        "processing": true,
+        "serverSide": true,
+        "pagingType": "full_numbers",
+        "paging": true,
+        "pageLength": 10,
+        "ajax": {
+            type: 'GET',
+            url: "/ajax/get_company_list/",
+            data: function (d) {
+                // if ($.trim(searchText) == '' || searchText == null || searchText == undefined) {
+                //     searchText = null;
+                // }
+                d.searchText = getSearchText();
+                // console.log(searchText);
+            }
+
+        },
         rowId: function (a) {
             return 'pk_' + a.id;
         },
@@ -373,6 +397,32 @@ function setupCompanyTable(tableID) {
         }
     });
 }
+
+
+function searchCompanyTable(tableID, value) {
+    // console.log('Enter NEW search...')
+    $.ajax({
+
+        type: "POST",
+        url: "/ajax/search_company/",
+        data: {
+            content: value,
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+        }
+
+    }).done(function (response) {
+        console.log('Rebuild table now.')
+        // $(tableID).DataTable().ajax.reload();
+
+    }).fail(function (response) {
+
+        $('#messageBox').attr("class", "alert alert-danger col-md-2");
+        $('#messageBox').find('span').html("<strong>Error!</strong> " + response.message);
+        $('#messageBox').css("display", "block");
+
+    });
+}
+
 // Company Related Functions - End
 
 
