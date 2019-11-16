@@ -1,5 +1,7 @@
+"""URLs for company app."""
+
 from django.urls import path
-from . import views
+from company import views
 
 app_name = 'company'
 
@@ -10,7 +12,8 @@ urlpatterns = [
          views.read_company, name='details'),
     path('company/update/<int:company_pk>/',
          views.update_company, name='update'),
-    path('ajax/get_company_list/', views.get_company_list, name='get_company_list'),
+    path('ajax/get_company_list/', views.get_company_list,
+         name='get_company_list'),
     path('company/create/', views.create_company, name='create'),
     path('ajax/company/delete/<int:pk>',
          views.delete_company, name='delete'),
