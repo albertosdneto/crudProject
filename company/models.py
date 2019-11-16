@@ -1,3 +1,5 @@
+"""Models for company app."""
+
 from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
@@ -7,6 +9,14 @@ from PIL import Image
 
 
 class Company(models.Model):
+    """
+
+    Stores a single company entry.
+
+    It contains one single main address.
+
+    """
+
     name = models.CharField(max_length=250)
     cnpj = models.CharField(max_length=14)
     webPage = models.CharField(default="", max_length=250)
@@ -24,11 +34,18 @@ class Company(models.Model):
     country = models.CharField(max_length=100, default="")
 
     def __str__(self):
+        """
+        Return company name.
+
+        Returns:
+            string -- company name
+
+        """
         return self.name
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-
+        """Save image for company logo."""
         super().save(force_insert, force_update,
                      using, update_fields)
 
@@ -41,6 +58,15 @@ class Company(models.Model):
 
 
 class CompanyAddress(models.Model):
+    """
+
+    Store extra addresses for companies.
+
+    Each company may have several addresses. All of them are kept
+    in this table.
+
+    """
+
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     addressType = models.CharField(max_length=50)
     line1 = models.CharField(max_length=200)  # Street or avenue, and number
@@ -51,4 +77,12 @@ class CompanyAddress(models.Model):
     country = models.CharField(max_length=100)
 
     def __str__(self):
+        """
+
+        Return company name.
+
+        Returns:
+            string -- company name.
+
+        """
         return self.company.name
