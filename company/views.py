@@ -1,11 +1,12 @@
+from .models import Company, CompanyAddress
 from django.core.paginator import Paginator
 from django.forms import inlineformset_factory
 from django.http import JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.decorators.csrf import csrf_protect
 
-from .forms import CompanyForm, CompanyFormUpdate, CompanyAddressForm, CompanyAddressFormHelper
-from .models import Company, CompanyAddress
+from .forms import (CompanyForm, CompanyFormUpdate,
+                    CompanyAddressForm, CompanyAddressFormHelper)
 
 
 def home(request):
@@ -22,9 +23,12 @@ def create_company(request):
     if request.method == "POST" and request.is_ajax():
         if form_company.is_valid():
             form_company.save()
-            return JsonResponse({'message': 'Company created successfully', 'success': True}, status=200)
+            return JsonResponse({'message': 'Company created successfully',
+                                 'success': True}, status=200)
         else:
-            return JsonResponse({'message': 'Error during form validation. Contact Support.', 'success': False}, status=200)
+            return JsonResponse({
+                'message': 'Error during form validation. Contact Support.',
+                'success': False}, status=200)
 
     context = {
         'companyForm': form_company,
@@ -62,8 +66,11 @@ def update_company(request, company_pk):
             input_name = data.split(".")
 
             # Make sure we only try to add addresses when necessary
-            # Then we create as much dictionaries as the number of new addresses to be created
-            if(input_name[0] == 'new_address_counter') and (request.POST[data] != '') and (request.POST[data] != '0'):
+            # Then we create as much dictionaries as the number of new
+            # addresses to be created
+            if((input_name[0] == 'new_address_counter')
+               and (request.POST[data] != '')
+               and (request.POST[data] != '0')):
                 new_address_counter = int(request.POST[data])
                 if new_address_counter > 0:
                     new_addresses = dict()
@@ -98,9 +105,11 @@ def update_company(request, company_pk):
         # Saves Company related data
         if company_form.is_valid():
             company_form.save()
-            return JsonResponse({'message': 'Company updated successfully!', 'success': True}, status=200)
+            return JsonResponse({'message': 'Company updated successfully!',
+                                 'success': True}, status=200)
         elif (not company_form.is_valid()):
-            return JsonResponse({'message': 'Error during form validation!', 'success': False}, status=400)
+            return JsonResponse({'message': 'Error during form validation!',
+                                 'success': False}, status=400)
 
     context = {
         'company': company,
@@ -146,11 +155,14 @@ def get_company_list(request):
             data['data'] = list(paginator.get_page(page))
             print(request.GET.get('searchText'))
         except:
-            return JsonResponse({"success": False, "message": "Error retrieving data"}, status=400)
+            return JsonResponse({"success": False,
+                                 "message": "Error retrieving data"},
+                                status=400)
 
         return JsonResponse(data, status=200)
 
-    return JsonResponse({'message': 'Error not GET method!', 'success': False}, status=400)
+    return JsonResponse({'message': 'Error not GET method!', 'success': False},
+                        status=400)
 
 
 def reload_addresses(request, company_pk):
