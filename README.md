@@ -42,7 +42,7 @@ sudo -u postgres psql postgres
 create database crudprojectdb;
 \q
 ```
-- Install gui for postgres:
+- (Optional) Install gui for postgres:
 ```shell
 sudo apt install pgadmin3
 ```
