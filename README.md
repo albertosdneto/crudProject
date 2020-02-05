@@ -33,7 +33,7 @@ pip install --upgrade pip setuptools
 ```
 - Install and configure PostgreSQL. On Ubuntu 18.04 do as follow:
 ```shell
-sudo apt install postgresql postgresql-contrib libpq-dev pytnon3-dev
+sudo apt install postgresql postgresql-contrib libpq-dev python3-dev
 ```
 - Create passoword and database. For password I used '123456', but you may change it:
 ```shell
