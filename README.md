@@ -14,36 +14,55 @@ Putting in practice concepts learned about jQuery, Bootstrap, javaScript, Python
 
 ## Installation
 
-- Create a virtual environment with python 3.6. In my case I used conda for that.
+- Clone the repository and enter the folder crudProject:
 ```shell
-conda create -n crudEnv python=3.6
+git clone https://github.com/albertosdneto/crudProject.git
+cd crudProject
+```
+- Create a virtual environment with python 3.6.
+```shell
+python3 -m venv venv
 ```
 - Activate the virtual environment you have just created:
 ```shell
-conda activate crudEnv
+source venv/bin/activate
 ```
-- Clone the repository:
+- Upgrade the virtual environment:
 ```shell
-git clone https://github.com/albertosdneto/crudProject.git
+pip install --upgrade pip setuptools
 ```
-- Go to the crudProject folder and install the requirements:
+- Install and configure PostgreSQL. On Ubuntu 18.04 do as follow:
 ```shell
-cd crudProject
-
-pip install -r requirements.txt
+sudo apt-get install postgresql postgresql-contrib
 ```
-- Install and configure PostgreSQL: you may find the links below useful:
+- Create passoword and database. For password I used '123456', but you may change it:
+```shell
+sudo -u postgres psql postgres
+\password postgres
+create database crudprojectdb;
+\q
+```
+- Install gui for postgres:
+```shell
+sudo apt-get install pgadmin3
+```
+- For more information on how to setup PostgreSQL take a look at the links below:
   - <https://help.ubuntu.com/community/PostgreSQL>
   - <https://medium.com/agatha-codes/painless-postgresql-django-d4f03364989>
   - <https://medium.com/@lucas_souto/integrando-django-com-postgresql-58b3520ddf6e>
 
-- Setup environment variables that will be used by ```settings.py```:
-``` shell
-export SECRET_KEY="some_random_key"
+- Install the requirements:
+```shell
+pip install -r requirements.txt
+```
 
-export DB_NAME="setup_database"
-export DB_USER="setup_user"
-export DB_PASS="setup_password"
+- Next to ```manage.py``` create the file ```.env``` with the content:
+``` shell
+DEBUG=True
+SECRET_KEY=ARANDOMSECRETKEY
+DB_NAME=crudprojectdb
+DB_USER=postgres
+DB_PASS=123456
 ```
 
 - Migrate database:

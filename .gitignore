@@ -88,7 +88,12 @@ celerybeat-schedule
 .venv
 venv/
 ENV/
+
+# VS Code
 .vscode
+
+# PyCharm
+.idea/
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -118,4 +123,4 @@ environment.txt
 secrete_key.txt
 
 .directory
-django_crud_bash_profile
+
